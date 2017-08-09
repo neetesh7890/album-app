@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Albumapp</title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag  'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>	
+    
+		<%= yield %>
+		<div class = "header">
+      <div style="position: fixed; ">
+      <%= link_to dashboards_path do %>
+      <%= image_tag "/uploads/albumapp.jpeg", size: "70x70" %>
+      <% end %>  
+      </div>
+      <div style="margin-left: 15px;">
+        <ul>
+          <li><%= link_to 'Manage Album', albums_path %></li>
+          <li><%= link_to 'Friends', friend_path(id: @user.id) %></li>
+          <li><%= link_to 'Edit Info', edit_user_path(id: @user.id) %></li>
+          <li><%= link_to 'LogOut', actions_logout_path, method: :delete %></li>
+        </ul>
+      </div>
+      
+      
+    </div> 
+    <div class = "footer">
+      <p>about</p>
+      <p>contact us</p>
+    </div>    
+  </body>
+</html>

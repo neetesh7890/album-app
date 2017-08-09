@@ -1,0 +1,92 @@
+<%= form_for @user do |f| %>
+  <div class="row color-e9e2e2">
+    <div class="col-md-12">
+      <br><br>    
+    </div>
+
+    <div class="col-md-12 center">
+      <% if @user.errors.any? %>
+        <h2>
+          <%= pluralize(@user.errors.count, "error") %> prohibited
+          this form from being saved:
+        </h2>
+        <ul>
+          <% @user.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+
+    <div class="col-md-12 center">
+      <h1>Registration Form</h1>    
+    </div>
+
+    <div class="col-md-12">
+      <hr>
+      <hr>
+    </div>
+    <div class="col-md-1 col-md-offset-4 center">
+      <%= f.label :firstname, id: "", class: "" %>
+    </div>
+    <div class="col-md-7">
+      <%= f.text_field :firstname, :required => true %>
+    </div>
+
+    <div class="col-md-1 col-md-offset-4 center">
+      <%= f.label :lastname %>
+    </div>
+    <div class="col-md-7">
+      <%= f.text_field :lastname, :required => true %>
+    </div>
+
+    <div class="col-md-1 col-md-offset-4 center">
+      <%= f.label :email %>
+    </div>
+    <div class="col-md-7">
+      <%= f.text_field :email, :required => true %>
+    </div>
+
+    <div class="col-md-1 col-md-offset-4 center">
+      <%= f.label :password %>
+    </div>
+    <div class="col-md-7">
+      <%= f.password_field :password, :required => true %>
+    </div>
+
+    <div class="col-md-1 col-md-offset-4 center">
+      <%= f.label :gender %>
+    </div>
+    <div class="col-md-7">
+      <%= f.radio_button :gender, false %>Male
+      <%= f.radio_button :gender, true %>Female 
+    </div>
+
+    <div class="col-md-1 col-md-offset-4 center">
+      <%= f.label :dob %>
+    </div>
+    <div class="col-md-7">
+      <%= f.date_select("dob", {start_year: 1995, end_year: Date.current.year}) %>
+    </div>
+
+    <div class="col-md-12">
+      <br>
+    </div>
+
+    <div class="col-md-7 col-md-offset-5">
+      <%= f.submit "Create Account" %>
+    </div>
+
+    <div class="col-md-12">
+      <br>
+    </div>
+
+    <div class="col-md-7 col-md-offset-5">
+     <%= link_to 'Click here for logIn', root_path %>
+     </div>
+     <div class="col-md-12">
+       <br><br><br><br><br><br><br><br><br><br><br>
+     </div>
+
+  </div>
+<% end %>

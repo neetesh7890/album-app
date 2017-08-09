@@ -1,0 +1,40 @@
+<div class="col-md-12">
+  <br>
+  <%= flash[:notice] %>  
+</div>
+
+<%= form_for @user , url: {action: "create"}, method: "post"  do |f| %>
+  <div class="row color-e9e2e2">
+    <div class="col-md-12 center">
+      <h1>Account Help!</h1>  
+    </div>
+    <div class="col-md-12">
+      <hr>
+      <hr>
+    </div>
+    <div class="col-md-1 col-md-offset-4 center">
+      <%= f.label :Enter_email %>
+    </div>
+
+    <div class="col-md-7">
+      <%= f.text_field :email, :required => true %>         
+    </div>
+    <div class="col-md-12">
+      <br>
+    </div>
+    <div class="col-md-7 col-md-offset-5">
+      <%= f.submit "Next" %>
+    </div>
+    <div class="col-md-12">
+      <br>
+    </div>
+    <div class="col-md-7 col-md-offset-5">
+      LogIn <%= link_to 'Click here', root_path %>
+    </div>
+    <div class="col-md-12">
+      <br><br><br><br><br><br><br><br><br><br>
+      <br><br><br><br><br><br><br><br><br><br>
+    </div>
+  </div>
+<% end %>
+

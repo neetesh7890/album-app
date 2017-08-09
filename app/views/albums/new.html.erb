@@ -1,0 +1,27 @@
+<%= form_for @album do |f| %>
+<div class="table-container">
+  <table cellpadding="2" width="20%" align="center" cellspacing="2">
+    
+    <tr>
+      <h2>Upload album</h2>
+      
+     </tr>
+
+    <tr>
+    	<td>Album_<%= f.label :name %></td>
+      <td><%= f.text_field :album_name, :required => true %></td>
+    </tr>
+
+    <tr>
+      <td><%= f.label :pictures %></td>
+  	  <td><%= f.file_field :image_name, :multiple => true %>	</td>
+  	</tr>
+
+     <tr>
+      <td></td>
+      <td><%= f.submit "Save changes" %></td>
+    </tr>
+    
+  </table>
+</div>
+  <% end %>

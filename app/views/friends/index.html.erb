@@ -1,0 +1,30 @@
+<div class="friends">
+	<h2>Friends</h2>
+		<h3><%= link_to 'All Friends', friend_path(id: @user.id) %></h3>
+		<table>
+			  <tr>
+			    <th>Name</th>			    
+			    <th>Photo</th>
+			    <th>Email</th>
+			    <th>Add Friend</th>
+			  </tr>
+			  <% @friends.each  do |name|%>
+				  <%
+						next if name.email == @user.email				  	
+				  %>
+				  <tr>
+				    <td><%= name.firstname %></td>
+				    <td>
+				    	<% if name.avater.present? %>
+				    		<%= image_tag "/uploads/#{name.avater}"	%>
+				    	<%	end %>			
+				    </td>
+				    <td><%= name.email %></td>
+					  <td><%= link_to friend_notification_path(name.id)  do%>
+					  		<i class="fa fa-user-plus" aria-hidden="true"></i>
+				    		<% end %>
+				    </td>
+				  </tr>
+			  <% end %>
+		</table>
+</div>

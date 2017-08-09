@@ -1,0 +1,112 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+
+ *= require_tree .
+ *= require_self
+ */
+
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+.min-height {
+	 min-height: 500px;
+}
+.row h2{
+	text-align: center;
+}
+.col-md-12 img {
+	height:350px; 
+	width: 370px;
+
+}
+.col-md-4 p{
+	text-align: center;
+	color: green;
+	font-size: 200%;
+}
+.row h2{
+	margin-bottom: 25px;
+}
+.image{
+
+	} 
+.image img {
+	height: 150px;
+	width:150px;
+	margin-right: 10px;
+}
+.image p {
+	color: green;
+	margin-left: 0px;
+	margin-top: 50px;
+	font-size: 200%;
+	
+}
+.navbar-default{
+		background-color: #0088dd; 
+}
+.navbar-default .navbar-nav > li > a{
+	color: white;
+}
+.navbar-default .navbar-brand{
+	color:white;
+}
+.popup-container {
+    margin-top:10px;
+    height: auto;
+    weight: 100%;
+    font-size: 120%;
+    margin-left:0px;
+}
+.popup-container table{
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-right: 20px;
+    height: auto;
+}
+.color-c2d6d6{
+	background-color: #c2d6d6;
+	margin-bottom: 100px;
+	min-height: 550px;
+}
+.color-ffeecc{
+	
+	margin-bottom: 10px;
+	min-height: 550px;
+}
+.color-e9e2e2{
+	background-color: #e9e2e2;
+}
+.center{
+	text-align: center;
+}
+.border-1px{
+	border: 1px solid #e9ebee;
+	margin-left: 10px;
+}
+.glyphicon-remove{
+	color: #ff4d4d;
+}
+.remove-friend{
+	margin-top: 110px;
+	color: white;
+	margin-left: 36px;
+}
+.index-margin-bottom{
+	margin-bottom: 45px;
+}
+.main-center {
+	margin: 0 auto;
+	max-width: 330px;
+	padding: 40px 40px;
+}

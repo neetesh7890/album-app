@@ -1,0 +1,31 @@
+<div class='row'>
+	<div class='col-md-4 col-sm-offset-4'>		
+		<h2>Friend-Albums</h2>
+	</div>
+</div>
+
+<div class='row'>
+	<% @friends.each do |friend| %>
+		<% albums = Album.where(user_id: friend.id)%>
+		<% albums.each do |item|%>
+			<% img = item.album_images.first 
+		      	next unless img.present?
+		  %>
+			<div class='col-md-4'>
+				<div class="col-md-4">
+					<p><%= friend.firstname %></p>
+				</div>
+				
+				<div class='col-md-12'> 
+					<%= link_to new_album_comment_path(item.id) do %>
+						<%= image_tag "/uploads/#{item.album_images.first.image_name}", class: 'img-thumbnail'	%>
+					<% end %>
+				</div>
+				
+				<div class="col-md-11 col-sm-offset-1 index-margin-bottom">
+					<p><%= link_to item.album_name %></p>
+				</div>
+			</div>
+		<% end %> 
+	<% end %>	
+</div>

@@ -1,0 +1,80 @@
+<div class="row color-e9e2e2">
+  <div class="col-md-12">
+    <br><br>    
+  </div>
+  <%= form_for @detail, url: user_path(id: @user.id), method: :put do |f| %>
+    <div class="col-md-12 center">
+      <% if @detail.errors.any? %>
+        <h2>
+          <%= pluralize(@detail.errors.count, "error") %> Data did not save because of following errors:
+        </h2>
+        <ul>
+          <% @detail.errors.full_messages.each do |msg| %>
+           <li><%= msg %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+
+    <div class="panel panel-info">
+      <div class="panel-heading center">
+        <h3>Enter basic information</h3>
+      </div>
+          
+    </div>
+
+    <div class="col-md-1 col-md-offset-4 center">
+      <%= f.label :address %>
+    </div>
+    <div class="col-md-7">
+      <%= f.text_field :address %>
+    </div>
+
+    <div class="col-md-1 col-md-offset-4 center">
+      <%= f.label :city %>
+    </div>
+    <div class="col-md-7">
+      <%= f.text_field :city %>
+    </div>
+
+    <div class="col-md-1 col-md-offset-4 center">
+      <%= f.label :avater %>
+    </div>
+
+    <div class="col-md-7">
+      <%= f.file_field :avater %>
+    </div>
+
+    <div class="col-md-1 col-md-offset-4 center">
+      <%= f.label :pincode %>
+      
+    </div>
+    <div class="col-md-7">
+      <%= f.text_field :pincode %>
+    </div>
+
+    <div class="col-md-1 col-md-offset-4 center">
+      <%= f.label :phone %>
+      
+    </div>
+    <div class="col-md-7">
+      <%= f.text_field :phone %>
+    </div>
+
+    <div class="col-md-12">
+      <br>
+    </div>
+
+    <div class="col-md-7 col-md-offset-5">
+      <%= f.submit "Save Changes" %>
+    </div>
+
+    <div class="col-md-12">
+      <br>
+    </div>
+
+    <div class="col-md-12">
+      <br><br><br><br><br><br><br><br><br>
+    </div>
+  <% end %>
+</div>

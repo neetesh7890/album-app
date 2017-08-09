@@ -1,0 +1,14 @@
+<%= form_for @user ,url: forgot_password_path do |f| %>
+
+	<br><br>
+  <h1>Account Help!</h1>
+  <br><hr><br>
+  <p>
+    New <%= f.label :password %><br>
+    <%= f.password_field :password %>
+  </p>
+  <p>
+    <%= f.submit "Update Password" %>
+  </p>
+
+<% end %>

@@ -1,0 +1,35 @@
+<div>
+	<table>
+		<% results.each do |result| %>
+			<tr>
+				<td>
+		    	<% if result.avater.present? %>
+		    		<%= image_tag "/uploads/#{result.avater}", height: '55', width: '70'	%>
+		    	<%	end %>			
+		    </td>
+				<td><%= result.firstname %></td>
+				<td >				
+					<%= link_to  friend_notification_path(result.id), class: 'request-sent', remote: true do%>
+	  			<i class="fa fa-user-plus " aria-hidden="true"></i>
+	  			<% end %>
+
+		  	</td>
+
+		  	<td class="hide-class">
+		  		<p >Friend Request Sent</p>
+					<% if result.avater.present? %>
+					<% end %>
+		  	</td>
+		  	
+			</tr>
+		<% end %>
+	</table>
+	<!-- friend_notification_path(result.id) -->
+</div>
+
+<script type="text/javascript">
+	$('.request-sent').click(function(){
+		
+		$(this).closest('tr').find('.hide-class').show()
+	});
+</script>

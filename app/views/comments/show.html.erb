@@ -1,0 +1,65 @@
+	<div class="col-md-3 ">
+		<h3><b>Album-Name</b></h3>
+	</div>
+	
+	<div class="col-md-4">
+		<h3><%= @album.album_name %></h3>
+		<hr>
+	</div>
+
+	<div class="col-md-8 color-ffeecc">
+		<% @albums.each do |item|%>
+			<div class="col-md-3">
+				<%= image_tag "/uploads/#{item.image_name}", height: "180px", width: "180px", class: 'img-rounded' %>	
+			</div>
+		<% end %>		
+	</div>
+
+	<div class="col-md-4 color-c2d6d6">
+		<div class="col-md-1">
+			<%= image_tag "/uploads/#{@friend.avater}", height: "50px", width: "50px" %>
+		</div>
+		<div class="col-md-8">
+			<p><%= @friend.firstname	%></p>
+		</div>
+		<div class="col-md-3">
+		</div>
+		<div class="col-md-12">
+			<hr><hr>
+		</div>
+		
+		<% @comments.each do |comment| %>
+			<% user = User.find_by(id: comment.user_id) %>
+			<div class="col-md-12">
+
+				<b><%= user.firstname%></b>
+			</div>
+			<div class="col-md-9 col-sm-offset-1">
+				: <%= comment.comment_name%>
+			</div>
+			<div class="col-md-2">
+			
+				<% if comment.user_id==session[:user_id] %>
+					<%= link_to album_comment_path(@album.id, comment.id) , method: :delete ,  data: { confirm: 'Sure to delete comment ?'} do %>
+			  		<i class="fa fa-times fa-2x" aria-hidden="true"></i>
+			  	<% end %>	
+			  <% end %>
+			</div>
+		<% end %>
+		
+		<%= form_for @comment ,url: comments_remark_path(album_id: @album.id), method: :post do |f| %>	
+			<div class="col-md-12">
+			<hr><hr>
+			</div>
+			<div class="col-md-12">
+				<%= f.label :comments %>
+			</div>
+			<div class="col-md-12">
+	  		<%= f.text_field :comment_name, required: true %>
+			</div>
+			<div class="col-md-12">
+				<%= f.submit "Create New Comment" %>
+			</div>		
+		<% end %>
+	</div>
+
