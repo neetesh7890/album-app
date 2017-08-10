@@ -4,7 +4,6 @@ class AlbumsController < ApplicationController
 		@user = User.find_by(id: session[:user_id])
 		@albums = @user.albums.paginate(:page => params[:page], :per_page => 6)
 		@album_ids = @user.friends.joins(:albums).paginate(:page => params[:page], :per_page => 6).album_has_more_comments
-		binding.pry
 	end
 
 	def my_album

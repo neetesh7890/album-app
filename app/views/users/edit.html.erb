@@ -4,7 +4,16 @@
   </div>
   <%= form_for @detail, url: user_path(id: @user.id), method: :put do |f| %>
     <div class="col-md-12 center">
-      <% if @detail.errors.any? %>
+      
+    </div>
+
+    <div class="panel panel-info">
+      <div class="panel-heading center">
+        <h3>Enter basic information</h3>
+      </div>
+      
+      <div class="panel-body">
+        <% if @detail.errors.any? %>
         <h2>
           <%= pluralize(@detail.errors.count, "error") %> Data did not save because of following errors:
         </h2>
@@ -13,14 +22,8 @@
            <li><%= msg %></li>
           <% end %>
         </ul>
-      <% end %>
-    </div>
-
-    <div class="panel panel-info">
-      <div class="panel-heading center">
-        <h3>Enter basic information</h3>
+      <% end %>  
       </div>
-          
     </div>
 
     <div class="col-md-1 col-md-offset-4 center">

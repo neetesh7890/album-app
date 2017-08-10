@@ -40,7 +40,7 @@ class User < ApplicationRecord
 
 	def self.authenticate(emailath, password)
   	@user = User.find_by(email: emailath)
-#VK : Optimize below code and reduce below conditions. done
+    #VK : Optimize below code and reduce below conditions. done
     if @user.status_email && @user.present? && password == @user.password
       @user    
     else
