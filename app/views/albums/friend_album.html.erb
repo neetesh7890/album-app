@@ -3,29 +3,26 @@
 		<h2>Friend-Albums</h2>
 	</div>
 </div>
-
 <div class='row'>
-	<% @friends.each do |friend| %>
-		<% albums = Album.where(user_id: friend.id)%>
-		<% albums.each do |item|%>
-			<% img = item.album_images.first 
+	<% @album_ids.each do |album_id| %>
+		<% album = Album.find_by(id: album_id.id) %>
+			<% img = album.album_images.first 
 		      	next unless img.present?
 		  %>
-			<div class='col-md-4'>
+			<div class='col-md-2'>
 				<div class="col-md-4">
-					<p><%= friend.firstname %></p>
+					<h4><%= User.find_by(id: album.user_id).firstname %></h4>
 				</div>
 				
 				<div class='col-md-12'> 
-					<%= link_to new_album_comment_path(item.id) do %>
-						<%= image_tag "/uploads/#{item.album_images.first.image_name}", class: 'img-thumbnail'	%>
+					<%= link_to new_album_comment_path(album.id) do %>
+						<%= image_tag "/uploads/#{album.album_images.first.image_name}", class: 'img-thumbnail'	%>
 					<% end %>
 				</div>
 				
 				<div class="col-md-11 col-sm-offset-1 index-margin-bottom">
-					<p><%= link_to item.album_name %></p>
+					<p><%= link_to album.album_name %></p>
 				</div>
 			</div>
-		<% end %> 
 	<% end %>	
 </div>

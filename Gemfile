@@ -31,9 +31,9 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 gem "jquery-rails"
 gem "twitter-bootstrap-rails"
-
+gem 'will_paginate'
 gem 'font-awesome-sass'
-
+gem 'pry-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

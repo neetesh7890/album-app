@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170801104149) do
+ActiveRecord::Schema.define(version: 20170810091332) do
 
   create_table "album_images", force: :cascade do |t|
     t.integer "album_id"
@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 20170801104149) do
     t.string "album_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.decimal "comments_count"
+    t.integer "comment_count"
     t.index ["user_id"], name: "index_albums_on_user_id"
   end
 

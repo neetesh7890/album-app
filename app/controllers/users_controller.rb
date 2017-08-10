@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   layout :compute_layout
   skip_before_action :access_check, only: [:new, :create,:show,:verify]
+  before_action :session_activity, only:[:new]
 
   def index
   end
@@ -76,6 +77,12 @@ class UsersController < ApplicationController
 
     def details_params_up
       params.require(:user_detail).permit(:address, :city, :pincode, :phone)
+    end
+
+    def session_activity
+      if session[:user_id]
+        redirect_to dashboards_path
+      end
     end
 
     def compute_layout

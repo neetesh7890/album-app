@@ -1,9 +1,10 @@
 class AlbumsController < ApplicationController
-	# skip_before_action :access_check, only: [:index, :new, :create, :show,:edit,:update,:destroy,:destroy_album,:my_album,:friend_album]
+
 	def index
 		@user = User.find_by(id: session[:user_id])
-		@albums = @user.albums
-		@friends = @user.friends.confirm_friend
+		@albums = @user.albums.paginate(:page => params[:page], :per_page => 6)
+		@album_ids = @user.friends.joins(:albums).paginate(:page => params[:page], :per_page => 6).album_has_more_comments
+		binding.pry
 	end
 
 	def my_album
@@ -13,7 +14,7 @@ class AlbumsController < ApplicationController
 
 	def friend_album
 		@user = User.find_by(id: session[:user_id])
-		@friends = @user.friends.confirm_friend		
+		@album_ids = @user.friends.joins(:albums).album_has_more_comments
 	end
 	
 	def show

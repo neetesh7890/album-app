@@ -16,24 +16,22 @@
 	</div>
 
 	<div class='row index-margin-bottom'>
-		<% @albums.first(3).each do |item|%>
+		<% @albums.first(6).each do |item|%>
 			<% image = item.album_images.first 
 	    	next unless image.present?
 	    %>
-			<div class='col-md-4'>
-					<div class='col-md-12'>
-						
-						<div class='col-md-1 col-sm-offset-9'>
-							<%= link_to  album_path(id: item.id),title:"Add More pic" do%>
-				        <span class="glyphicon glyphicon-plus"></span>
-				      <% end %>
-						</div>
-						<div class='col-md-1'>
-							<%= link_to album_destroy_album_path(item.id), method: :delete ,title: "Remove Album", data: { confirm: 'Are you sure?' }  do %> 
-								<title>Remove</title>
-				        <span class="glyphicon glyphicon-remove"></span>
-				      <% end %> 	
-						</div>
+			<div class='col-md-2'>
+					
+					<div class='col-md-1 col-sm-offset-7'>
+						<%= link_to  album_path(id: item.id),title:"Add More pic" do%>
+			        <span class="glyphicon glyphicon-plus"></span>
+			      <% end %>
+					</div>
+					<div class='col-md-2'>
+						<%= link_to album_destroy_album_path(item.id), method: :delete ,title: "Remove Album", data: { confirm: 'Are you sure?' }  do %> 
+							<title>Remove</title>
+			        <span class="glyphicon glyphicon-remove"></span>
+			      <% end %> 	
 					</div>
 
 				<div class='col-md-12'>
@@ -46,12 +44,14 @@
 				</div>
 			</div>
 		<% end %>
+			<div class="col-md-12">
+				<%= will_paginate @albums %>
+			</div>
 	</div>
 <% end %>
 
-<hr>
-<hr>
 
+<hr>
 <div class='row'>
 	<div class='col-md-4 col-sm-offset-4'>		
 		<h2>Friends-Albums</h2>
@@ -63,30 +63,24 @@
 </div>
 
 <div class='row'>
-	<% @i = 0 %>
-	<% @friends.each do |friend| %>
-		<% break if @i==4%>
-		<% albums = Album.where(user_id: friend.id)%>
-		<% albums.first(3).each do |item|%>
-			<% img = item.album_images.first 
-		      	next unless img.present?
-		  %>
-		  <% @i = @i+1 %>
-			<% break if @i == 4 %>
-			<div class='col-md-4'>
+	<% @album_ids.first(6).each do |album_id| %>
+		<% album = Album.find_by(id: album_id.id) %>
+			<div class='col-md-2'>
 				<div class="col-md-4">
-					<p><%= friend.firstname %></p>
+					<h4><%= User.find_by(id: album.user_id).firstname %></h4>
 				</div>
 				
 				<div class='col-md-12'> 
-					<%= link_to new_album_comment_path(item.id) do %>
-						<%= image_tag "/uploads/#{item.album_images.first.image_name}", class: 'img-thumbnail'	%>
+					<%= link_to new_album_comment_path(album.id) do %>
+						<%= image_tag "/uploads/#{album.album_images.first.image_name}", class: 'img-thumbnail'	%>
 					<% end %>
 				</div>
 				<div class="col-md-11 col-sm-offset-1">
-					<p><%= link_to item.album_name %></p>
+					<%= link_to album.album_name %>
 				</div>
 			</div>
-		<% end %> 
 	<% end %>	
 </div>
+	<div class="col-md-12">
+		<%= will_paginate @albums %>
+	</div>

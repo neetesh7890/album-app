@@ -24,6 +24,7 @@ class CommentsController < ApplicationController
 		@comment = @album.comments.create(params.require(:comment).permit(:comment_name))
 		id_store = Comment.find_by(id: @comment.id)
 		id_store.user_id = @user.id
+		Album.find_by(id: params[:album_id]).increment!(:comment_count) #Auto increment comment_count in albums
 		if id_store.save
 			redirect_to album_comment_path(@album.id, @comment.id)	# params[:id] send does not maek sense but to make routes valid
 		else
@@ -38,12 +39,12 @@ class CommentsController < ApplicationController
 		@albums = @album.album_images
 		@comment = Comment.new
 		@comments = @album.comments
-		
+
 	end
 
 	def destroy
-		# session check karke khud ka comment delete only check please
 		comment = Comment.find_by(id: params[:id])
+		Album.find_by(id: params[:album_id]).decrement!(:comment_count) #Auto decrement comment_count in albums
 		if comment.user_id == session[:user_id] 
 			comment.destroy
 			redirect_to album_comment_path(params[:album_id],params[:id]) # params[:id] send does not maek sense but to make routes valid 		else 

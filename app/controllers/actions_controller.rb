@@ -1,6 +1,6 @@
 class ActionsController < ApplicationController
 	skip_before_action :access_check, only: [:login,:new,:create,:reset_password, :update_password]
-
+	before_action :session_activity, only:[:login,:new]
 	def login
 		@user = User.new
 	end
@@ -61,5 +61,12 @@ class ActionsController < ApplicationController
 		end
 		#VK : Need to check if update then redirect, otherwise redirect back with some notice. done
 	end
+
+	private
+		def session_activity
+      if session[:user_id]
+        redirect_to dashboards_path
+      end
+    end
 	
 end

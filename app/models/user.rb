@@ -16,6 +16,8 @@ class User < ApplicationRecord
   scope :confirm_friend, ->{ where("user_friends.status ='accept'") }
   scope :pending_friend, ->{ where("user_friends.status ='pending'") }# how to merge these two lines into one
 
+  scope :album_has_more_comments, ->{ select('albums.id').where("user_friends.status='accept'").order('comment_count DESC') }
+  
   # scope :not_friend, ->{ where("user_friends.status <>'accept'") }
   scope :all_friends, -> (ids) { where.not(id: ids) }
   
