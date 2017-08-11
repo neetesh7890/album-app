@@ -9,7 +9,6 @@ class AlbumsController < ApplicationController
 	def my_album
 		@user = User.find_by(id: session[:user_id])
 		@albums = @user.albums
-		#neetesh
 	end
 
 	def friend_album
