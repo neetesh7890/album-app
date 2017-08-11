@@ -2,7 +2,6 @@ class UsersController < ApplicationController
   layout :compute_layout
   skip_before_action :access_check, only: [:new, :create,:show,:verify]
   before_action :session_activity, only:[:new]
-  #mine new changes
   def index
   end
 
