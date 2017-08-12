@@ -75,6 +75,7 @@ class AlbumsController < ApplicationController
 		end
 
 		# unless arr.nil?
+		
 		# 	arr.each do |img_name|
 		# 		@albumimage = AlbumImage.new
 		# 		@albumimage.album_id = @album.id
