@@ -17,23 +17,21 @@
 
 	<div class='row index-margin-bottom'>
 		<% @albums.first(6).each do |item|%>
-			<% image = item.album_images.first 
-	    	next unless image.present?
-	    %>
+			
+			<% image = item.album_images.first %>
+			
 			<div class='col-md-2'>
-					
-					<div class='col-md-1 col-sm-offset-7'>
-						<%= link_to  album_path(id: item.id),title:"Add More pic" do%>
-			        <span class="glyphicon glyphicon-plus"></span>
-			      <% end %>
-					</div>
-					<div class='col-md-2'>
-						<%= link_to album_destroy_album_path(item.id), method: :delete ,title: "Remove Album", data: { confirm: 'Are you sure?' }  do %> 
-							<title>Remove</title>
-			        <span class="glyphicon glyphicon-remove"></span>
-			      <% end %> 	
-					</div>
-
+				<div class='col-md-1 col-sm-offset-7'>
+					<%= link_to  album_path(id: item.id),title:"Add More pic" do%>
+		        <span class="glyphicon glyphicon-plus"></span>
+		      <% end %>
+				</div>
+			<div class='col-md-2'>
+					<%= link_to album_destroy_album_path(item.id), method: :delete ,title: "Remove Album", data: { confirm: 'Are you sure?' }  do %> 
+						<title>Remove</title>
+		        <span class="glyphicon glyphicon-remove"></span>
+		      <% end %> 	
+				</div>
 				<div class='col-md-12'>
 					<%= link_to new_album_comment_path(item.id) do %>
 						<%= image_tag "/uploads/#{image.image_name}", class: 'img-thumbnail' %>

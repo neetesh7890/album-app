@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170810091332) do
+ActiveRecord::Schema.define(version: 20170812093551) do
 
   create_table "album_images", force: :cascade do |t|
     t.integer "album_id"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 20170810091332) do
     t.boolean "status_email"
     t.boolean "remember_me"
     t.integer "count"
+    t.boolean "status"
   end
 
 end

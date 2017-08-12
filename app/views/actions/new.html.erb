@@ -1,6 +1,5 @@
 <div class="col-md-12">
-  <br>
-  <%= flash[:notice] %>  
+  <%= bootstrap_flash %>
 </div>
 
 <%= form_for @user , url: {action: "create"}, method: "post"  do |f| %>

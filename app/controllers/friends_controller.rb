@@ -1,23 +1,19 @@
 class FriendsController < ApplicationController
 	skip_before_action :access_check, only: [:index,:notification,:accept,:show,:search,:destroy]
 	def index
-		@user = User.find_by(id: session[:user_id])	
 		@friends = User.all
 	end
 
 	def show
-		@user = User.find_by(id: params[:id])	
 		@friends = @user.friends.confirm_friend
 	end
 
 	def search
-		@user = User.find_by(id: session[:user_id])	
 		@ids = @user.friends.ids
 		@results = User.search(params[:q]).all_friends(@ids)
 	end
 
 	def notification
-		@user = User.find_by(id: session[:user_id])
 		@friend = User.find_by(id: params["friend_id"])
 		@token = SecureRandom.uuid.gsub(/\-/,'')
 		UserMailer.notification(@user, @friend, @token).deliver_later
