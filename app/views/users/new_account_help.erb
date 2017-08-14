@@ -2,7 +2,7 @@
   <%= bootstrap_flash %>
 </div>
 
-<%= form_for @user , url: {action: "registration_form"}, method: "post"  do |f| %>
+<%= form_for @user , url: {action: "create_account_help"}, method: "post"  do |f| %>
   <div class="row color-e9e2e2">
     <div class="col-md-12 center">
       <h1>Account Help!</h1>  
@@ -12,7 +12,7 @@
       <hr>
     </div>
     <div class="col-md-1 col-md-offset-4 center">
-      <%= f.label :Enter_email %>
+      <%= f.label :Enter_email%>
     </div>
 
     <div class="col-md-7">

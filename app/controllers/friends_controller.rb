@@ -1,7 +1,11 @@
 class FriendsController < ApplicationController
+	
 	skip_before_action :access_check, only: [:index,:notification,:accept,:show,:search,:destroy]
+	
+
+
 	def index
-		@friends = User.all
+		@friends = @user.friends.confirm_friend
 	end
 
 	def show
@@ -26,9 +30,9 @@ class FriendsController < ApplicationController
 		@userfriend.status = "pending"	
 		
 		if @userfriend.save
-			redirect_to dashboards_path #remove redirect
+			redirect_to user_dashboards_path(user_id: @user.id) #remove redirect
 		else	
-			redirect_to dashboards_path #remove redirect
+			redirect_to user_dashboards_path(user_id: @user.id) #remove redirect
 		end
 	end
 
@@ -54,23 +58,24 @@ class FriendsController < ApplicationController
 
 		if @userfriend.status == "accept"
 				flash[:notice] = "Already added"
-				redirect_to dashboards_path
+				redirect_to user_dashboards_path(user_id: @user.id)
 		else
 			if @userfriend.token == params["token"] && session[:user_id]==@userfriend.friend_id
 				@userfriend.status = "accept"
 				if  @userfriend.save
 					flash[:notice] = "Friend added"	
-					redirect_to dashboards_path	
+					redirect_to user_dashboards_path(user_id: @user.id)
 				end
 			else
 				flash[:notice] = "Invalid Link"
-				redirect_to dashboards_path
+				redirect_to user_dashboards_path(user_id: @user.id)
 			end
 		end
 	end
 
 	def destroy
-		@friend = UserFriend.find_by(friend_id: params[:id])
+		debugger
+		@friend = @user.friends.confirm_friend.find(params[:id])
 		friend_entries = UserFriend.where(token: @friend.token)
 		friend_entries.each do |entry|
 			entry.destroy
