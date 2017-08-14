@@ -1,6 +1,8 @@
 class SessionsController < ApplicationController  
   layout "users", only:[:edit,:show]
   skip_before_action :access_check, only: [:new, :create]
+  skip_before_action :current_user, only: [:new, :create]
+
 
   def show   
   end

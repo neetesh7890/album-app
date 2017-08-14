@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   validates :firstname, presence: true
-  validates :email, uniqueness: true, presence: true
+  validates :email, uniqueness: true, presence: true,format: { with: /\A[^@\s]+@([^@.\s]+\.)+[^@.\s]+\z/ }
+  
   validates :password, presence: true
   validates :gender, presence: true
   validates :dob, presence: true
@@ -39,12 +40,12 @@ class User < ApplicationRecord
   # end
 
 	def self.authenticate(emailath, password)
-  	@user = User.find_by(email: emailath)
+  	user = User.find_by(email: emailath)
     #VK : Optimize below code and reduce below conditions. done
-    if @user.status_email && @user.present? && password == @user.password
-      @user    
+    if user.status_email && user.present? && password == user.password
+      user    
     else
-      @user = nil 
+      user = nil 
     end
 
     # unless @user.status_email #if status false then 
