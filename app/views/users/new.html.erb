@@ -1,14 +1,11 @@
 <%= form_for :user, url: users_path do |f| %>
  <div class="row color-e9e2e2">
-  <div class="col-md-12">    
-  </div>
 
   <div class="panel panel-info">
     <div class="panel-heading center">
       <h1>Registration Form</h1> 
     </div>
     <div class="panel-body"> 
-     <div class="col-md-12 center">
       <% if @user.errors.any? %>
        <h2>
         <%= pluralize(@user.errors.count, "error") %> prohibited
@@ -21,17 +18,15 @@
         <% end %>
       <% end %>
      </div>   
-    </div>
   </div>
-
+  
   <div class="main-center">
-
     <div class="form-group">
       <%= f.label :firstname, id: "", class: "cols-sm-2 control-label" %>
       <div class="cols-sm-10">
         <div class="input-group">
           <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-          <%= f.text_field :firstname, :required => true, placeholder: "Enter your name" %>
+          <%= f.text_field :firstname, :required => true, placeholder: "Enter your name", class:"form-control" %>
         </div>
       </div>
     </div>
@@ -41,7 +36,7 @@
       <div class="cols-sm-10">
         <div class="input-group">
           <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-          <%= f.text_field :lastname, :required => true, placeholder: "Enter your last name" %>
+          <%= f.text_field :lastname, :required => true, placeholder: "Enter your last name", class:"form-control" %>
         </div>
       </div>
     </div>

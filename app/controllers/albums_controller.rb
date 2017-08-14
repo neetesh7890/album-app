@@ -2,13 +2,13 @@ class AlbumsController < ApplicationController
 
 	def index
 		@user = User.find_by(id: session[:user_id])
-		@albums = @user.albums.paginate(:page => params[:page], :per_page => 6)
+		@albums = @user.albums.paginate(:page => params[:page], :per_page => 6).order('comment_count DESC')
 		@album_ids = @user.friends.joins(:albums).paginate(:page => params[:page], :per_page => 6).album_has_more_comments
 	end
 
 	def my_album
 		@user = User.find_by(id: session[:user_id])
-		@albums = @user.albums
+		@albums = @user.albums.order('comment_count DESC')
 	end
 
 	def friend_album
