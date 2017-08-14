@@ -13,6 +13,8 @@
 //= require rails-ujs
 //= require turbolinks
 //= require jquery
+//= require bootstrap.min
 //= require_tree .
+
 @import "font-awesome-sprockets";
 @import "font-awesome";
