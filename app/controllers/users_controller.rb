@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
-  layout :compute_layout
+
+  # layout :compute_layout
+  layout "special_layout", only: [:new,:create]
   skip_before_action :access_check, only: [:new, :create,:show,:verify]
+  skip_before_action :current_user, only: [:new, :create,:show,:verify]
   before_action :session_activity, only:[:new]
   
   def index
@@ -8,7 +11,6 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new 
-    render layout: "special_layout" # Don't render a layout
   end
 
   def create
@@ -18,7 +20,7 @@ class UsersController < ApplicationController
       UserMailer.welcome_email(@user).deliver_later #VK : Need to put into template. done
       redirect_to  user_path(@user) # user k show par
     else
-      redirect_to new_user_path
+      render 'new'
     end
   end
 
@@ -31,8 +33,7 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit    
-    @user = User.find_by(id: session[:user_id])
+  def edit
     @detail = @user.user_detail.present? ? @user.user_detail : UserDetail.new
   end
 
@@ -63,7 +64,6 @@ class UsersController < ApplicationController
   end
 
   def friends
-    @user = User.find_by(id: session[:user_id])
     @friends = @user.friends
   end
 

@@ -1,6 +1,11 @@
 class ActionsController < ApplicationController
-	skip_before_action :access_check, only: [:login,:new,:create,:reset_password, :update_password]
+	
+	#Filters
 	before_action :session_activity, only:[:login,:new]
+
+	#Filters skip
+	skip_before_action :access_check, only: [:login,:new,:create,:reset_password, :update_password]
+	skip_before_action :current_user, only: [:login,:new,:create,:reset_password, :update_password]
 	def login
 		@user = User.new
 	end
