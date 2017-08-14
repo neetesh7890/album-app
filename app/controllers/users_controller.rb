@@ -41,9 +41,9 @@ class UsersController < ApplicationController
     @user = User.find_by(id: params[:id])
     @detail = @user.user_detail.present? ? @user.user_detail : UserDetail.new(details_params_up)
     uploaded_io = params[:user_detail][:avater]
-    bool = false
+    bool = true
     bool = avater_size(uploaded_io.size) if uploaded_io.present?
-    if uploaded_io.present? && !bool
+    if uploaded_io.present? && bool
       profile_pic_name = params[:user_detail][:avater].original_filename
       File.open(Rails.root.join('public', 'uploads', profile_pic_name), 'wb') do |file|
       file.write(uploaded_io.read)
@@ -51,7 +51,7 @@ class UsersController < ApplicationController
         @detail.user_id = @user.id
       end
     else
-      flash[:notice] = "Profile did not update"
+      flash[:notice] = "Profile did not update error occured on form or image size might be too large "
       redirect_to dashboards_path and return
     end  
 
@@ -91,12 +91,10 @@ class UsersController < ApplicationController
     end
 
     def avater_size(size) #VK : Need to put into common place and understand how to use it into multiple models.
-      
       if  size > 5.megabytes #Need to understand how you can get the size of image.
-        flash[:notice] = "image size too large"
-        true
-      else
         false
+      else
+        true
       end
     end
 
