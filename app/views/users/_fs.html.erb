@@ -1,4 +1,45 @@
+<% results.each do |result| %>  
+    <div class="col-md-3">
+    <% if result.avater.present? %>
+        <%= image_tag "/uploads/#{result.avater}", height: '55', width: '70'    %>
+    <%  end %>          
+  </div>
 
+  <div class="col-md-3">
+        <%= result.firstname %>
+    </div>
+
+    <div class="col-md-2">
+        <%= link_to  friend_notification_path(result.id), class: 'request-sent', remote: true do%>
+            <i class="fa fa-user-plus " aria-hidden="true"></i>
+        <% end %>
+    </div>
+          
+    <div class="col-md-4 hide-class">
+        <p >Friend Request Sent</p>
+        <% if result.avater.present? %>
+        <% end %>
+    </div>
+<% end %>
+
+<div class="col-md-12s">
+    <br>
+    <br>
+</div>
+<script type="text/javascript">
+    $('.request-sent').click(function(){
+        
+        $(this).closest('tr').find('.hide-class').show()
+    });
+</script>
+
+
+
+
+
+<%= link_to  friend_notification_path(result.id), class: 'request-sent', remote: true do%>
+                <i class="fa fa-user-plus " aria-hidden="true"></i>
+                <% end %>
 
 
 

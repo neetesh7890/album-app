@@ -64,7 +64,7 @@
 .popup-container {
     margin-top:10px;
     height: auto;
-    weight: 100%;
+    width: 100%;
     font-size: 120%;
     margin-left:0px;
 }
@@ -74,6 +74,13 @@
     margin-right: 20px;
     height: auto;
 }
+.popup-container table td{
+	margin-left: 10px;
+}
+.hide-class{
+    display:none;
+}
+
 .color-c2d6d6{
 	background-color: #c2d6d6;
 	margin-bottom: 100px;

@@ -9,7 +9,8 @@ class FriendsController < ApplicationController
 	end
 
 	def search
-		@ids = @user.friends.ids
+		@ids = @user.friends.confirm_friend.ids
+		@ids = @ids.push(@user.id)
 		@results = User.search(params[:q]).all_friends(@ids)
 	end
 
