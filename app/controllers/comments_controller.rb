@@ -1,9 +1,25 @@
 class CommentsController < ApplicationController
+	
+	#Actions
 	def index
+		@album = @user.albums.find_by(id: params[:album_id])
+		@albums = @album.album_images
+		@comment = Comment.new
+		@comments = @album.comments
+		@friend = User.find_by(id: @album.user_id)
+	end
+
+	def album_comments #new
+		user_ids = @user.friends.confirm_friend.pluck(:id)
+		@friends_albums = Album.where(user_id: user_ids).comments
+		@album = @friends_albums.find_by(id: params[:album_id])
+		@albums = @album.album_images
+		@comment = Comment.new
+		@comments = @album.comments
+		@friend = User.find_by(id: @album.user_id)
 	end
 
 	def new
-		@user = User.find_by(id: session[:user_id])
 		@album = Album.find_by(id: params[:album_id])
 		@friend = User.find_by(id: @album.user_id)
 		@albums = @album.album_images
@@ -19,38 +35,59 @@ class CommentsController < ApplicationController
 	end
 
 	def remark
-		@user = User.find_by(id: session[:user_id])
 		@album = Album.find_by(id: params[:album_id])
 		@comment = @album.comments.create(params.require(:comment).permit(:comment_name))
 		id_store = Comment.find_by(id: @comment.id)
 		id_store.user_id = @user.id
 		Album.find_by(id: params[:album_id]).increment!(:comment_count) #Auto increment comment_count in albums
 		if id_store.save
-			redirect_to album_comment_path(@album.id, @comment.id)	# params[:id] send does not maek sense but to make routes valid
+			redirect_to user_album_comments_path(@user.id,params[:album_id])
 		else
-			redirect_to album_comment_path(@album.id, @comment.id)	# params[:id] send does not maek sense but to make routes valid
+			flash[:notice] = "Comments wan not done"
+			redirect_to user_album_comments_path(@user.id,params[:album_id])	# params[:id] send does not maek sense but to make routes valid
 		end
 	end
 
-	def show
-		@user = User.find_by(id: session[:user_id])
-		@album = Album.find_by(id: params[:album_id])
-		@friend = User.find_by(id: @album.user_id)
-		@albums = @album.album_images
-		@comment = Comment.new
-		@comments = @album.comments
-
+	def comments_remark
+		user_ids = @user.friends.confirm_friend.pluck(:id)
+		@friends_albums = Album.where(user_id: user_ids).comments
+		@album = @friends_albums.find_by(id: params[:album_id])
+		@comment = @album.comments.create(params.require(:comment).permit(:comment_name))
+		id_store = Comment.find_by(id: @comment.id)
+		id_store.user_id = @user.id
+		Album.find_by(id: params[:album_id]).increment!(:comment_count) #Auto increment comment_count in albums
+		if id_store.save
+			redirect_to comments_user_album_comments_path(@user.id,params[:album_id])
+		else
+			flash[:notice] = "Comments wan not done"
+			redirect_to comments_user_album_comments_path(@user.id,params[:album_id])	# params[:id] send does not maek sense but to make routes valid
+		end
 	end
 
-	def destroy
-		comment = Comment.find_by(id: params[:id])
+	def show	
+	end
+
+	def destroy	
+		comment = @user.albums.find_by(id: params[:album_id]).comments.find(params[:id])
 		Album.find_by(id: params[:album_id]).decrement!(:comment_count) #Auto decrement comment_count in albums
-		if comment.user_id == session[:user_id] 
-			comment.destroy
-			redirect_to album_comment_path(params[:album_id],params[:id]) # params[:id] send does not maek sense but to make routes valid 		else 
+		if comment.destroy
+			redirect_to user_album_comments_path(@user.id,params[:album_id])
 		else
-			flash[:notice] = "You can not delete friend's comment."
-			redirect_to album_comment_path(params[:album_id],params[:id]) # params[:id] send does not maek sense but to make routes valid 
+			flash[:notice] = "Something went wrong could not delete comment"
+			redirect_to user_album_comments_path(@user.id,params[:album_id])
+		end
+	end
+
+	def comment_destroy #new
+		user_ids = @user.friends.confirm_friend.pluck(:id)
+		@friends_albums = Album.where(user_id: user_ids).comments
+		comment = @friends_albums.find_by(id: params[:album_id]).comments.find(params[:id])
+		Album.find_by(id: params[:album_id]).decrement!(:comment_count) #Auto decrement comment_count in albums
+		if comment.destroy
+			redirect_to comments_user_album_comments_path(@user.id,params[:album_id])
+		else
+			flash[:notice] = "Something went wrong could not delete comment"
+			redirect_to comments_user_album_comments_path(@user.id,params[:album_id])
 		end
 	end
 

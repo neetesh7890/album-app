@@ -16,17 +16,42 @@ Rails.application.routes.draw do
   
   resources :users do
     get :verify#old
-    
-    resources :friends do
+
+    resources :albums do
+     
       collection do
-        # get :verify
-         get '/:token/accept', to:'friends#accept', as: 'accept'
+        get '/my_album', to: "albums#my_album",as: 'my_album'
+        get '/friend_album', to: "albums#friend_album",as: 'friend_album'
+      end
+      
+      member do
+        get 'my_album_all', to:'albums#my_album_all', as: 'album_all'
+        delete 'destroy_pic'
+      end
+
+      
+      resources :comments do
+        collection do
+          get 'album_comments', to:'comments#album_comments', as: 'comments'
+          post '/remark', to:'comments#remark', as: 'remark'
+          post '/comments_remark', to:'comments#comments_remark', as: 'cmts_remark'
+        end
+
+        member do
+          delete 'comment_destroy', to: 'comments#comment_destroy', as: 'cmts_destroy'
+        end
       end
     end
-    
-    resources :albums
-
     resources :dashboards
+    resources :friends do
+      get :notification
+
+      collection do
+        # get :verify
+
+        get '/:token/accept', to:'friends#accept', as: 'accept'
+      end
+    end
   end
 
 
@@ -36,16 +61,14 @@ Rails.application.routes.draw do
   #   get :verify
   # end
   resources :albums do
-    delete :destroy_album
     resources :comments do
-    
     end
   end 
-  get '/albums/my_album/:id', to: "albums#my_album",as: 'my_album'
-  get '/albums/friend_album/:id', to: "albums#friend_album",as: 'friend_album'
+
+  # get '/albums/friend_album/:id', to: "albums#friend_album",as: 'friend_album'
 
   resources :friends do
-    get :notification
+    # get :notification
   end
   post 'friends/search', to:'friends#search'
 
@@ -55,7 +78,7 @@ Rails.application.routes.draw do
 
   
   # resources :comments
-  post 'albums/:album_id/comments/remark', to:'comments#remark', as: 'comments_remark'
+  # post 'albums/:album_id/comments/remark', to:'comments#remark', as: 'comments_remark'
 
   # get 'actions/login'
   

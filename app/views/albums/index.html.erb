@@ -1,7 +1,7 @@
 <%= form_for @user , url: {action: "create"}, method: "post"  do |f| %>
 	<div class='row'>
 		<div class='col-md-4'>
-			<%= link_to new_album_path, title:"Create new album" do%>
+			<%= link_to new_user_album_path(@user.id), title:"Create new album" do%>
 		  	<i class="fa fa-plus fa-3x" aria-hidden="true"></i>
 		  <% end %>	
 		</div>
@@ -11,7 +11,7 @@
 		</div>
 
 		<div class='col-md-4'>		
-			<p><%= link_to "View All", my_album_path(id: @user.id) %></p>
+			<p><%= link_to "View All", my_album_user_albums_path(@user.id) %></p>
 		</div>		
 	</div>
 
@@ -21,20 +21,20 @@
 			<div class='col-md-2'>
 					
 				<div class='col-md-1 col-sm-offset-7'>
-					<%= link_to  album_path(id: item.id),title:"Add More pic" do%>
+					<%= link_to  album_all_user_album_path(@user.id,item.id),title:"Add More pic" do%>
 		        <span class="glyphicon glyphicon-plus"></span>
 		      <% end %>
 				</div>
 
 				<div class='col-md-2'>
-					<%= link_to album_destroy_album_path(item.id), method: :delete ,title: "Remove Album", data: { confirm: 'Are you sure?' }  do %> 
+					<%= link_to user_album_path(@user.id,item.id), method: :delete ,title: "Remove Album", data: { confirm: 'Are you sure?' }  do %> 
 						<title>Remove</title>
 		        <span class="glyphicon glyphicon-remove"></span>
 		      <% end %> 	
 				</div>
 
 				<div class='col-md-12'>
-					<%= link_to new_album_comment_path(item.id) do %>
+					<%= link_to user_album_comments_path(@user.id,item.id) do %>
 						<%= image_tag "/uploads/#{image.image_name}", class: 'img-thumbnail' %>
 					<% end %>
 				</div>
@@ -58,20 +58,19 @@
 	</div>
 	
 	<div class='col-md-4'>		
-		<p><%= link_to "View All", friend_album_path(id: @user.id) %></p>
+		<p><%= link_to "View All", friend_album_user_albums_path(@user.id) %></p>
 	</div>
 </div>
 
 <div class='row'>
-	<% @album_ids.first(6).each do |album_id| %>
-		<% album = Album.find_by(id: album_id.id) %>
+	<% @friends_albums.each do |album| %>
 			<div class='col-md-2'>
 				<div class="col-md-4">
 					<h4><%= User.find_by(id: album.user_id).firstname %></h4>
 				</div>
 				
 				<div class='col-md-12'> 
-					<%= link_to new_album_comment_path(album.id) do %>
+					<%= link_to comments_user_album_comments_path(@user.id,album.id) do %>
 						<%= image_tag "/uploads/#{album.album_images.first.image_name}", class: 'img-thumbnail'	%>
 					<% end %>
 				</div>

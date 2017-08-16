@@ -5,4 +5,6 @@ class Album < ApplicationRecord
   has_many :album_images, dependent: :destroy
   # validates :image_name, presence: true
   
+  #Scopes
+  scope :comments, -> { order('comment_count DESC') }
 end

@@ -8,8 +8,8 @@
 		    	<%	end %>			
 		    </td>
 				<td><%= result.firstname %></td>
-				<td >				
-					<%= link_to  friend_notification_path(result.id), class: 'request-sent', remote: true do%>
+				<td >	
+					<%= link_to  user_friend_notification_path(@user.id,result.id), class: 'request-sent', remote: true do%>
 	  			<i class="fa fa-user-plus " aria-hidden="true"></i>
 	  			<% end %>
 

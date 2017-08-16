@@ -1,9 +1,9 @@
 class FriendsController < ApplicationController
 	
+	#Filters skip
 	skip_before_action :access_check, only: [:index,:notification,:accept,:show,:search,:destroy]
-	
 
-
+	#Actions
 	def index
 		@friends = @user.friends.confirm_friend
 	end
@@ -22,17 +22,14 @@ class FriendsController < ApplicationController
 		@friend = User.find_by(id: params["friend_id"])
 		@token = SecureRandom.uuid.gsub(/\-/,'')
 		UserMailer.notification(@user, @friend, @token).deliver_later
-		
-		@userfriend = UserFriend.new
-		@userfriend.user_id = @user.id
+		@userfriend = @user.user_friends.new
 		@userfriend.friend_id = @friend.id
 		@userfriend.token = @token
 		@userfriend.status = "pending"	
-		
 		if @userfriend.save
-			redirect_to user_dashboards_path(user_id: @user.id) #remove redirect
+			redirect_to user_dashboards_path(@user.id)#remove redirect
 		else	
-			redirect_to user_dashboards_path(user_id: @user.id) #remove redirect
+			redirect_to user_dashboards_path(@user.id) #remove redirect
 		end
 	end
 
@@ -41,8 +38,8 @@ class FriendsController < ApplicationController
 	
 	def accept
 		@userfriend = UserFriend.find_by(token: params["token"])
-		
 		if @userfriend.token == params["token"] && session[:user_id]==@userfriend.friend_id
+			#token only thats why remain same else i would have used association
 			mutual = UserFriend.new
 			mutual.token = @userfriend.token
 			mutual.user_id = @userfriend.friend_id
@@ -74,13 +71,13 @@ class FriendsController < ApplicationController
 	end
 
 	def destroy
-		debugger
-		@friend = @user.friends.confirm_friend.find(params[:id])
+		remove_friend = @user.friends.confirm_friend.find(params[:id])
+		@friend = UserFriend.find_by(user_id: remove_friend.id)
 		friend_entries = UserFriend.where(token: @friend.token)
 		friend_entries.each do |entry|
 			entry.destroy
 		end	
-		redirect_to friend_path(id: session[:user_id]) 
+		redirect_to user_friends_path(@user.id) 
 	end
 
 	def edit

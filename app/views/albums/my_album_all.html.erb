@@ -1,0 +1,40 @@
+<%= form_for @album , url: user_album_path(@user.id,@album.id), method: "put"  do |f| %>
+  <div class='row'>
+    <div class='col-md-12'>
+      <h2><%= @album.album_name %></h2>
+    </div>
+  </div>
+  <hr>
+  <div class='row'>
+    <div class='col-md-2'>
+      Add More Images
+    </div>
+    <div class='col-md-3'>
+      <%= f.file_field :image_name, :multiple => true, :required => true %>
+    </div>
+    <div class='col-md-2'>
+      <%= f.submit "Update Album" %>
+    </div>
+  </div>
+<br>
+<hr>
+
+  <div class='row'>
+    <% @albums.each do |item|%>
+      <div class='col-md-4'>    
+        <div class='col-md-12'>
+          
+        </div>
+        <div class='col-md-12'>
+          <%= link_to destroy_pic_user_album_path(@user.id,@album.id,pic_id: item.id),method: :delete, title: "Delete pic",data: { confirm: 'Are you sure?' }  do %>
+          <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+        <% end %>
+        </div>
+    
+        <div class='col-md-12 index-margin-bottom'>
+          <%= image_tag "/uploads/#{item.image_name}", size: "300x300"  %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

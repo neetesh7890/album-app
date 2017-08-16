@@ -4,18 +4,14 @@
 	</div>
 </div>
 <div class='row'>
-	<% @album_ids.each do |album_id| %>
-		<% album = Album.find_by(id: album_id.id) %>
-			<% img = album.album_images.first 
-		      	next unless img.present?
-		  %>
+	<% @friends_albums.each do |album| %>
 			<div class='col-md-2'>
 				<div class="col-md-4">
 					<h4><%= User.find_by(id: album.user_id).firstname %></h4>
 				</div>
 				
 				<div class='col-md-12'> 
-					<%= link_to new_album_comment_path(album.id) do %>
+					<%= link_to comments_user_album_comments_path(@user.id,album.id) do %>
 						<%= image_tag "/uploads/#{album.album_images.first.image_name}", class: 'img-thumbnail'	%>
 					<% end %>
 				</div>
