@@ -5,7 +5,9 @@ class User < ApplicationRecord
   validates :gender, presence: true
   validates :dob, presence: true
   
-  # validate :avater_size
+  attr_accessor :size
+  validate :avater_size,if: :avater?
+  
 
   has_one :user_detail
   has_many :albums
@@ -67,11 +69,7 @@ class User < ApplicationRecord
   	# end
   end
 
-  private 
-    def avater_image_size
-      if avater.size > 5.megabytes
-        errors.add(:avater, "should be less than 5MB" )
-      end
-    end
-
+    def avater_size #VK : Need to put into common place and understand how to use it into multiple models.
+      errors.add(:base, "Image should be less than 5MB") if size > 5.megabytes
+    end  
 end

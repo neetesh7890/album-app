@@ -16,5 +16,25 @@
 //= require bootstrap.min
 //= require_tree .
 
-@import "font-awesome-sprockets";
-@import "font-awesome";
+// @import "font-awesome-sprockets";
+// @import "font-awesome";
+
+
+function submit() {
+  debugger
+  return $.post({
+    user = $("#user_id").val();
+    album = $("#album_id").val();
+    url: "/users/" + user+ "/albums/" + album + "/comments/remark",
+    data: {
+      product: {
+        name: "Album-app",
+        description: "whatever"
+      }
+    },
+    dataType: "json",
+    success: function(data) {
+      return alert(cmts.id);
+    }
+  });
+}

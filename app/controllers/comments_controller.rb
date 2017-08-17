@@ -7,6 +7,7 @@ class CommentsController < ApplicationController
 		@comment = Comment.new
 		@comments = @album.comments
 		@friend = User.find_by(id: @album.user_id)
+
 	end
 
 	def album_comments #new
@@ -40,12 +41,15 @@ class CommentsController < ApplicationController
 		id_store = Comment.find_by(id: @comment.id)
 		id_store.user_id = @user.id
 		Album.find_by(id: params[:album_id]).increment!(:comment_count) #Auto increment comment_count in albums
-		if id_store.save
-			redirect_to user_album_comments_path(@user.id,params[:album_id])
-		else
-			flash[:notice] = "Comments wan not done"
-			redirect_to user_album_comments_path(@user.id,params[:album_id])	# params[:id] send does not maek sense but to make routes valid
-		end
+		# if id_store.save
+		# 	redirect_to user_album_comments_path(@user.id,params[:album_id])
+		# else
+		# 	flash[:notice] = "Comments wan not done"
+		# 	redirect_to user_album_comments_path(@user.id,params[:album_id])	# params[:id] send does not maek sense but to make routes valid
+		# end
+		debugger
+		id_store.save
+		@cmts = id_store
 	end
 
 	def comments_remark
@@ -70,12 +74,15 @@ class CommentsController < ApplicationController
 	def destroy	
 		comment = @user.albums.find_by(id: params[:album_id]).comments.find(params[:id])
 		Album.find_by(id: params[:album_id]).decrement!(:comment_count) #Auto decrement comment_count in albums
-		if comment.destroy
-			redirect_to user_album_comments_path(@user.id,params[:album_id])
-		else
-			flash[:notice] = "Something went wrong could not delete comment"
-			redirect_to user_album_comments_path(@user.id,params[:album_id])
-		end
+		# if comment.destroy
+			# render 'index'
+			# redirect_to user_album_comments_path(@user.id,params[:album_id])
+		# else
+			# render 'index'
+			# flash[:notice] = "Something went wrong could not delete comment"
+			# redirect_to user_album_comments_path(@user.id,params[:album_id])
+		# end
+		@comment = comment.destroy
 	end
 
 	def comment_destroy #new

@@ -30,20 +30,24 @@
     
     <% @comments.each do |comment| %>
       <% user = User.find_by(id: comment.user_id) %>
-      <div class="col-md-12">
+      <div id="com-<%=comment.id%>">
+        <div class="col-md-12">
 
-        <b><%= user.firstname%></b>
-      </div>
-      <div class="col-md-9 col-sm-offset-1">
-        : <%= comment.comment_name%>
-      </div>
-      <div class="col-md-2">
+          <b><%= user.firstname%></b>
+        </div>
       
-        <% if comment.user_id==session[:user_id] %>
-          <%= link_to user_album_comment_path(@user.id,@album.id,comment.id) , method: :delete ,  data: { confirm: 'Sure to delete comment ?'} do %>
-            <i class="fa fa-times fa-2x" aria-hidden="true"></i>
-          <% end %> 
-        <% end %>
+        <div class="col-md-9 col-sm-offset-1">
+          : <%= comment.comment_name%>
+        </div>
+
+        <div class="col-md-2">
+          <% if comment.user_id==session[:user_id] %>
+          
+            <%= link_to user_album_comment_path(@user.id,@album.id,comment.id) , method: :delete, remote: true ,  data: { confirm: 'Sure to delete comment ?'} do %>
+              <i class="fa fa-times fa-2x" aria-hidden="true" ></i>
+            <% end %> 
+          <% end %>
+        </div>
       </div>
     <% end %>
     
@@ -54,12 +58,15 @@
       <div class="col-md-12">
         <%= f.label :comments %>
       </div>
-      <div class="col-md-12">
+
+      <%= hidden_field_tag(:user_id, @user.id) %>
+      <%= hidden_field_tag(:album_id, @album.id) %>
+
+      <div class="col-md-12 comment">
         <%= f.text_field :comment_name, required: true, class:"form-control" %>
       </div>
       <div class="col-md-12">
-        <%= f.submit "Create New Comment" %>
+        <%= f.submit "Create New Comment", :onclick => "submit();" %>
       </div>    
     <% end %>
   </div>
-

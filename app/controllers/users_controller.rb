@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   layout "special_layout", only: [:new,:create,:create_account_help,:reset_password ]
 
   #Filters
-  before_action :session_activity, only:[:new]
+  before_action :session_activity, only:[:new,:new_account_help,:login]
 
   #Filters skip
   skip_before_action :access_check, only: [:new, :create,:show,:verify]
@@ -88,21 +88,16 @@ class UsersController < ApplicationController
   def update
     @user = User.find_by(id: params[:id])
     @detail = @user.user_detail.present? ? @user.user_detail : UserDetail.new(details_params_up)
-    uploaded_io = params[:user_detail][:avater]
-    bool = false
-    bool = avater_size(uploaded_io.size) if uploaded_io.present?
-    if uploaded_io.present? && !bool
+    uploaded_io = params[:user_detail][:avater] 
+    uploaded_io.present? ? @user.size = uploaded_io.size : @user.size = 0
+    if uploaded_io.present?
       profile_pic_name = params[:user_detail][:avater].original_filename
       File.open(Rails.root.join('public', 'uploads', profile_pic_name), 'wb') do |file|
       file.write(uploaded_io.read)
         @user.avater = profile_pic_name
         @detail.user_id = @user.id
       end
-    else
-      flash[:notice] = "Profile did not update"
-      redirect_to user_dashboards_path(user_id: @user.id) and return
     end  
-
     if @detail.update(details_params_up) && @user.save
       flash[:notice] = "#{@user.firstname} Your Profile successfully updated"
       redirect_to user_dashboards_path(user_id: @user.id) #VK : Redirect from here to dashboard and show message. remove "show_update" action. done
@@ -130,7 +125,7 @@ class UsersController < ApplicationController
 
     def session_activity
       if session[:user_id]
-        redirect_to user_dashboards_path(user_id: @user.id)
+        redirect_to user_dashboards_path(user_id: session[:user_id])
       end
     end
 
@@ -138,15 +133,15 @@ class UsersController < ApplicationController
       # ["new", :new,:create,:verify].include?(action_name)  ? "application" : "users" 
     end
 
-    def avater_size(size) #VK : Need to put into common place and understand how to use it into multiple models.
+    # def avater_size(size) #VK : Need to put into common place and understand how to use it into multiple models.
       
-      if  size > 5.megabytes #Need to understand how you can get the size of image.
-        flash[:notice] = "image size too large"
-        true
-      else
-        false
-      end
-    end
+    #   if  size > 5.megabytes #Need to understand how you can get the size of image.
+    #     flash[:notice] = "image size too large"
+    #     true
+    #   else
+    #     false
+    #   end
+    # end
 
 end
 
