@@ -35,7 +35,11 @@
 
 				<div class='col-md-12'>
 					<%= link_to user_album_comments_path(@user.id,item.id) do %>
-						<%= image_tag "/uploads/#{image.image_name}", class: 'img-thumbnail' %>
+						<% if item.album_images.first.present? %>
+							<%= image_tag "/uploads/#{image.image_name}", class: 'img-thumbnail' %>
+						<% else %>
+							<%= image_tag "/uploads/", class: 'img-thumbnail' %>
+						<% end %>
 					<% end %>
 				</div>
 

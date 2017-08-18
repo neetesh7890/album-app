@@ -6,7 +6,7 @@ class User < ApplicationRecord
   validates :dob, presence: true
   
   attr_accessor :size
-  validate :avater_size,if: :avater?
+  validate :avater_size #, if: :avater?
   
 
   has_one :user_detail

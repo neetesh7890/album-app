@@ -1,5 +1,8 @@
 class CommentsController < ApplicationController
 	
+	#Filters skip
+	skip_before_action :verify_authenticity_token, :only => [:remark]
+	
 	#Actions
 	def index
 		@album = @user.albums.find_by(id: params[:album_id])
@@ -7,7 +10,6 @@ class CommentsController < ApplicationController
 		@comment = Comment.new
 		@comments = @album.comments
 		@friend = User.find_by(id: @album.user_id)
-
 	end
 
 	def album_comments #new
@@ -37,19 +39,20 @@ class CommentsController < ApplicationController
 
 	def remark
 		@album = Album.find_by(id: params[:album_id])
-		@comment = @album.comments.create(params.require(:comment).permit(:comment_name))
-		id_store = Comment.find_by(id: @comment.id)
-		id_store.user_id = @user.id
+		@comment = @album.comments.create()
+		@comment.comment_name = params[:new_comment]
+		@comment.user_id = @user.id
 		Album.find_by(id: params[:album_id]).increment!(:comment_count) #Auto increment comment_count in albums
-		# if id_store.save
+		# if @comment.save
 		# 	redirect_to user_album_comments_path(@user.id,params[:album_id])
 		# else
 		# 	flash[:notice] = "Comments wan not done"
 		# 	redirect_to user_album_comments_path(@user.id,params[:album_id])	# params[:id] send does not maek sense but to make routes valid
 		# end
-		debugger
-		id_store.save
-		@cmts = id_store
+		@comment.save
+		respond_to do |format|
+			format.js
+		end
 	end
 
 	def comments_remark

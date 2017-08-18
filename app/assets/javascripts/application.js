@@ -19,22 +19,13 @@
 // @import "font-awesome-sprockets";
 // @import "font-awesome";
 
-
-function submit() {
-  debugger
-  return $.post({
-    user = $("#user_id").val();
-    album = $("#album_id").val();
+function submit_btn() {
+  user = $("#user_id").val()
+  album = $("#album_id").val()
+  $.ajax({
     url: "/users/" + user+ "/albums/" + album + "/comments/remark",
-    data: {
-      product: {
-        name: "Album-app",
-        description: "whatever"
-      }
-    },
-    dataType: "json",
-    success: function(data) {
-      return alert(cmts.id);
-    }
+    type: 'POST',
+    dataType: 'script',
+    data: { new_comment: $("#comment_comment_name").val() }
   });
 }

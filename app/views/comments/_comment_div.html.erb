@@ -1,0 +1,15 @@
+<div id="com-<%=@user.id%>">
+  <div class="col-md-12">
+    <b><%= @user.firstname%></b>
+  </div>
+  <div class="col-md-9 col-sm-offset-1">
+    : <%= @comment.comment_name%>    
+  </div>
+  <div class="col-md-2">
+    <% if @comment.user_id==session[:user_id] %>
+      <%= link_to user_album_comment_path(@user.id,@album.id,@comment.id) , method: :delete, remote: true ,  data: { confirm: 'Sure to delete comment ?'} do %>
+      <i class="fa fa-times fa-2x" aria-hidden="true" ></i>
+      <% end %>
+    <% end %>
+  </div>
+</div>

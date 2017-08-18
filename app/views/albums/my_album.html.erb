@@ -12,32 +12,34 @@
 	</div>	
 
 	<div class='row'>
-	
 		<% @albums.each do |item|%>
 			<% image = item.album_images.first %>
 			<div class='col-md-2'>
+				<% image = item.album_images.first %>	
+					<div class='col-md-1 col-sm-offset-7'>
+						<%= link_to  album_all_user_album_path(@user.id,item.id),title:"Add More pic" do%>
+			        <span class="glyphicon glyphicon-plus"></span>
+			      <% end %>
+					</div>
+					<div class='col-md-1'>
+						<%= link_to user_album_path(@user.id,item.id), method: :delete ,title:"Remove Album", data: { confirm: 'Are you sure?' }  do%> 
+							<span class="glyphicon glyphicon-remove"></span>
+			        
+			      <% end %> 	
+					</div>
 					
-						
-						<div class='col-md-1 col-sm-offset-7'>
-							<%= link_to  album_all_user_album_path(@user.id,item.id),title:"Add More pic" do%>
-				        <span class="glyphicon glyphicon-plus"></span>
-				      <% end %>
-						</div>
-						<div class='col-md-1'>
-							<%= link_to user_album_path(@user.id,item.id), method: :delete ,title:"Remove Album", data: { confirm: 'Are you sure?' }  do%> 
-								<span class="glyphicon glyphicon-remove"></span>
-				        
-				      <% end %> 	
-						</div>
-					
-				<div class='col-md-12'>
-					<%= link_to user_album_comments_path(@user.id,item.id) do %>
-						<%= image_tag "/uploads/#{image.image_name}", class: 'img-thumbnail' %>
-					<% end %>
-				</div>
-				<div class='col-md-12 index-margin-bottom'>
-					<p><%= link_to item.album_name %></p>
-				</div>
+					<div class='col-md-12'>
+						<%= link_to user_album_comments_path(@user.id,item.id) do %>
+							<% if item.album_images.first.present? %>
+								<%= image_tag "/uploads/#{image.image_name}", class: 'img-thumbnail' %>
+							<% else %>
+								<%= image_tag "/uploads/", class: 'img-thumbnail' %>
+							<% end %>
+						<% end %>
+					</div>
+					<div class='col-md-12 index-margin-bottom'>
+						<p><%= link_to item.album_name %></p>
+					</div>
 			</div>
 		<% end %>
 	</div>

@@ -27,31 +27,31 @@
     <div class="col-md-12">
       <hr><hr>
     </div>
-    
-    <% @comments.each do |comment| %>
-      <% user = User.find_by(id: comment.user_id) %>
-      <div id="com-<%=comment.id%>">
-        <div class="col-md-12">
-
-          <b><%= user.firstname%></b>
-        </div>
-      
-        <div class="col-md-9 col-sm-offset-1">
-          : <%= comment.comment_name%>
-        </div>
-
-        <div class="col-md-2">
-          <% if comment.user_id==session[:user_id] %>
+    <div id="comments">
+      <% @comments.each do |comment| %>
+        <% user = User.find_by(id: comment.user_id) %>
+          <div id="com-<%=comment.id%>">
+            <div class="col-md-12">
+              <b><%= user.firstname%></b>
+            </div>
           
-            <%= link_to user_album_comment_path(@user.id,@album.id,comment.id) , method: :delete, remote: true ,  data: { confirm: 'Sure to delete comment ?'} do %>
-              <i class="fa fa-times fa-2x" aria-hidden="true" ></i>
-            <% end %> 
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-    
-    <%= form_for @comment ,url: remark_user_album_comments_path(@user.id,@album.id), method: :post do |f| %>  
+            <div class="col-md-9 col-sm-offset-1">
+              : <%= comment.comment_name%>
+            </div>
+
+            <div class="col-md-2">
+              <% if comment.user_id==session[:user_id] %>
+              
+                <%= link_to user_album_comment_path(@user.id,@album.id,comment.id) , method: :delete, remote: true ,  data: { confirm: 'Sure to delete comment ?'} do %>
+                  <i class="fa fa-times fa-2x" aria-hidden="true" ></i>
+                <% end %> 
+              <% end %>
+            </div>
+          </div>
+      <% end %>
+    </div>
+
+    <%= form_for @comment ,url: remark_user_album_comments_path(@user.id,@album.id), method: :post, :html => { :onsubmit => "return false" } do |f| %>  
       <div class="col-md-12">
       <hr><hr>
       </div>
@@ -66,7 +66,7 @@
         <%= f.text_field :comment_name, required: true, class:"form-control" %>
       </div>
       <div class="col-md-12">
-        <%= f.submit "Create New Comment", :onclick => "submit();" %>
+        <%= f.submit "Create New Comment", :onclick => "submit_btn();" %>
       </div>    
     <% end %>
   </div>

@@ -14,15 +14,25 @@
       
       <div class="panel-body">
         <% if @detail.errors.any? %>
-        <h2>
-          <%= pluralize(@detail.errors.count, "error") %> Data did not save because of following errors:
-        </h2>
-        <ul>
-          <% @detail.errors.full_messages.each do |msg| %>
-           <li><%= msg %></li>
-          <% end %>
-        </ul>
-      <% end %>  
+          <h2>
+            <%= pluralize(@detail.errors.count, "error") %> Data did not save because of following errors:
+          </h2>
+          <ul>
+            <% @detail.errors.full_messages.each do |msg| %>
+             <li><%= msg %></li>
+            <% end %>
+          </ul>
+        <% end %>
+        <% if @user.errors.any? %>
+          <h2>
+            <%= pluralize(@user.errors.count, "error") %> Data did not save because of following errors:
+          </h2>
+          <ul>
+            <% @user.errors.full_messages.each do |message| %>
+             <li><%= message %></li>
+            <% end %>
+          </ul>
+        <% end %>  
       </div>
     </div>
 

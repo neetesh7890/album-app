@@ -1,5 +1,5 @@
 class AlbumsController < ApplicationController
-
+	
 	#Actions
 	def index
 		@albums = @user.albums.order('comment_count DESC').paginate(:page => params[:page], :per_page => 6)

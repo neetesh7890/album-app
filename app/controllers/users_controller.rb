@@ -97,8 +97,8 @@ class UsersController < ApplicationController
         @user.avater = profile_pic_name
         @detail.user_id = @user.id
       end
-    end  
-    if @detail.update(details_params_up) && @user.save
+    end
+    if @user.save && @detail.update(details_params_up)
       flash[:notice] = "#{@user.firstname} Your Profile successfully updated"
       redirect_to user_dashboards_path(user_id: @user.id) #VK : Redirect from here to dashboard and show message. remove "show_update" action. done
     else
@@ -132,17 +132,6 @@ class UsersController < ApplicationController
     def compute_layout
       # ["new", :new,:create,:verify].include?(action_name)  ? "application" : "users" 
     end
-
-    # def avater_size(size) #VK : Need to put into common place and understand how to use it into multiple models.
-      
-    #   if  size > 5.megabytes #Need to understand how you can get the size of image.
-    #     flash[:notice] = "image size too large"
-    #     true
-    #   else
-    #     false
-    #   end
-    # end
-
 end
 
 
