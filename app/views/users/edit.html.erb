@@ -2,7 +2,7 @@
   <div class="col-md-12">
     <br><br>    
   </div>
-  <%= form_for @detail, url: user_path(@user.id), method: :put do |f| %>
+  <%= form_for @user, url: user_path(@user.id), method: :put do |f| %>
     <div class="col-md-12 center">
       
     </div>
@@ -28,51 +28,57 @@
       </div>
     </div>
 
-    <div class="col-md-1 col-md-offset-4 center">
-      <%= f.label :address %>
-    </div>
-    <div class="col-md-7">
-      <%= f.text_field :address %>
-    </div>
 
-    <div class="col-md-1 col-md-offset-4 center">
-      <%= f.label :city %>
-    </div>
-    <div class="col-md-7">
-      <%= f.text_field :city %>
-    </div>
+    <%= f.fields_for :user_detail do |ud| %>
+    
+      <div class="col-md-1 col-md-offset-4 center">
+        <%= ud.label :address %>
+      </div>
 
-    <div class="col-md-1 col-md-offset-4 center">
-      <%= f.label :avater %>
-    </div>
+      <div class="col-md-7">
+        <%= ud.text_field :address %>
+      </div>
 
-    <div class="col-md-7">
-      <%= f.file_field :avater %>
-    </div>
+      <div class="col-md-1 col-md-offset-4 center">
+        <%= ud.label :city %>
+      </div>
+      <div class="col-md-7">
+        <%= ud.text_field :city %>
+      </div>
 
-    <div class="col-md-1 col-md-offset-4 center">
-      <%= f.label :pincode %>
-      
-    </div>
-    <div class="col-md-7">
-      <%= f.text_field :pincode %>
-    </div>
+      <div class="col-md-1 col-md-offset-4 center">
+        <%= ud.label :avater %>
+      </div>
 
-    <div class="col-md-1 col-md-offset-4 center">
-      <%= f.label :phone %>
-      
-    </div>
-    <div class="col-md-7">
-      <%= f.text_field :phone %>
-    </div>
+      <div class="col-md-7">
+        <%= ud.file_field :avater %>
+      </div>
 
-    <div class="col-md-12">
-      <br>
-    </div>
+      <div class="col-md-1 col-md-offset-4 center">
+        <%= ud.label :pincode %>
+        
+      </div>
+      <div class="col-md-7">
+        <%= ud.text_field :pincode %>
+      </div>
 
-    <div class="col-md-7 col-md-offset-5">
-      <%= f.submit "Save Changes" %>
-    </div>
+      <div class="col-md-1 col-md-offset-4 center">
+        <%= ud.label :phone %>
+        
+      </div>
+      <div class="col-md-7">
+        <%= ud.text_field :phone %>
+      </div>
+
+      <div class="col-md-12">
+        <br>
+      </div>
+
+      <div class="col-md-7 col-md-offset-5">
+        <%= ud.submit "Save Changes" %>
+      </div>
+
+    <% end %> 
 
     <div class="col-md-12">
       <br>
