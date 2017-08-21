@@ -89,7 +89,6 @@ class UsersController < ApplicationController
     @detail = @user.user_detail.present? ? @user.user_detail : @user.build_user_detail
     uploaded_io = params[:user][:user_detail_attributes][:avater]
     uploaded_io.present? ? @user.size = uploaded_io.size : @user.size = 0
-    debugger
     if uploaded_io.present?
       profile_pic_name = params[:user][:user_detail_attributes][:avater].original_filename
       File.open(Rails.root.join('public', 'uploads', profile_pic_name), 'wb') do |file|

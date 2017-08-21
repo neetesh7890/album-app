@@ -1,7 +1,7 @@
 class FriendsController < ApplicationController
 	
 	#Filters skip
-	skip_before_action :access_check, only: [:index,:notification,:accept,:show,:search,:destroy]
+	skip_before_action :access_check, only: [:notification,:accept,:show,:search,:destroy]
 
 	#Actions
 	def index

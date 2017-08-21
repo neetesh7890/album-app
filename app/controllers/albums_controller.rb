@@ -30,6 +30,31 @@ class AlbumsController < ApplicationController
 		@user = User.find_by(id: session[:user_id])
 	end
 
+	def create
+		debugger
+		@album = @user.albums.new(params.require(:album).permit(:album_name))
+		img_names = params["album"]["image_name"]
+		if img_names.present?
+			img_names.each do |img_name|
+				@albumimage = @album.album_images.new
+				pic_name = img_name.original_filename
+				File.open(Rails.root.join('public', 'uploads', pic_name), 'wb') do |file|
+		      file.write(img_name.read)
+		        @albumimage.image_name = pic_name
+		      end
+			end
+			if @album.save
+				flash[:notice] = "Album Created"
+				redirect_to user_albums_path(@user.id)	
+			else
+				redirect_to user_albums_path(@user.id)		
+			end
+		else
+			flash[:notice] = "Album could not be created please select atleast one image"
+			redirect_to user_albums_path(@user.id)		
+		end
+	end
+
 	def edit
 	end
 	
@@ -51,30 +76,6 @@ class AlbumsController < ApplicationController
 		end
 
 		redirect_to album_all_user_album_path(@user.id,params[:id])
-	end
-
-	def create
-		@album = @user.albums.new(params.require(:album).permit(:album_name))
-		img_names = params["album"]["image_name"]
-		if img_names.present?
-			if @album.save
-				img_names.each do |img_name|
-					@albumimage = AlbumImage.new
-					@albumimage.album_id = @album.id
-					pic_name = img_name.original_filename
-					File.open(Rails.root.join('public', 'uploads', pic_name), 'wb') do |file|
-			      file.write(img_name.read)
-			        @albumimage.image_name = pic_name
-			      end
-					@albumimage.save	
-				end
-				flash[:notice] = "Album Created"
-				redirect_to user_albums_path(@user.id)	
-			end	
-		else
-			flash[:notice] = "Album could not be created please select atleast one image"
-			redirect_to user_albums_path(@user.id)		
-		end
 	end
 
 	def destroy	
