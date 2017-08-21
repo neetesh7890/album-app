@@ -87,9 +87,11 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find_by(id: params[:id])
-    @detail = @user.user_detail.present? ? @user.user_detail : UserDetail.new(details_params_up)
+    parameter = {address: params["user_detail"]["address"],city: params["user_detail"]["city"],pincode: params["user_detail"]["pincode"]}
+    @detail = @user.user_detail.present? ? @user.user_detail : @user.build_user_detail(parameter)
     uploaded_io = params[:user_detail][:avater] 
     uploaded_io.present? ? @user.size = uploaded_io.size : @user.size = 0
+
     if uploaded_io.present?
       profile_pic_name = params[:user_detail][:avater].original_filename
       File.open(Rails.root.join('public', 'uploads', profile_pic_name), 'wb') do |file|
@@ -98,7 +100,7 @@ class UsersController < ApplicationController
         @detail.user_id = @user.id
       end
     end
-    if @user.save && @detail.update(details_params_up)
+    if @user.save
       flash[:notice] = "#{@user.firstname} Your Profile successfully updated"
       redirect_to user_dashboards_path(user_id: @user.id) #VK : Redirect from here to dashboard and show message. remove "show_update" action. done
     else
@@ -119,9 +121,9 @@ class UsersController < ApplicationController
       params.require(:user).permit(:firstname, :lastname, :email, :password, :gender, :dob)
     end
 
-    def details_params_up
-      params.require(:user_detail).permit(:address, :city, :pincode, :phone)
-    end
+    # def details_params_up
+    #   params.require(:user_detail).permit(:address, :city, :pincode, :phone)
+    # end
 
     def session_activity
       if session[:user_id]

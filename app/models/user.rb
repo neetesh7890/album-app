@@ -6,10 +6,10 @@ class User < ApplicationRecord
   validates :dob, presence: true
   
   attr_accessor :size
-  validate :avater_size #, if: :avater?
+  validate :avater_size , if: :avater?
   
 
-  has_one :user_detail
+  has_one :user_detail, autosave: true
   has_many :albums
   
   has_many :user_friends
