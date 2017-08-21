@@ -12,7 +12,7 @@ class User < ApplicationRecord
   attr_accessor :size
   
   #Associations
-  has_one :user_detail, dependent: :destroy, autosave: true
+  has_one :user_detail, dependent: :destroy
   has_many :albums
   has_many :user_friends
   has_many :friends, through: :user_friends

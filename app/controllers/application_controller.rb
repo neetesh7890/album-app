@@ -10,11 +10,15 @@ class ApplicationController < ActionController::Base
   	def access_check 
       unless session[:user_id]
         flash[:notice] = "You must be logged in to access this section"
-        redirect_to  users_login_path # actions  controller k login
+        redirect_to  users_login_path
       end
     end
     
     def current_user
-      @user = User.find(session[:user_id])
+      if User.find_by(id: session[:user_id]).present?
+        @user = User.find_by(id: session[:user_id]) 
+      else
+        session[:user_id] = nil
+      end
     end
 end

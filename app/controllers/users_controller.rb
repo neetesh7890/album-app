@@ -8,9 +8,8 @@ class UsersController < ApplicationController
   before_action :session_activity, only:[:new,:new_account_help,:login]
 
   #Filters skip
-  skip_before_action :access_check, only: [:new, :create,:show,:verify]
-  skip_before_action :current_user, only: [:login,:new,:create,:reset_password, :update_password,:show,:verify,:new_account_help,:create_account_help]
-  skip_before_action :access_check, only: [:login,:new_account_help,:create_account_help,:reset_password, :update_password]
+  skip_before_action :current_user, only: [:new,:create,:reset_password, :update_password,:show,:verify,:new_account_help,:create_account_help]
+  skip_before_action :access_check, only: [:new, :create,:show,:verify,:login,:new_account_help,:create_account_help,:reset_password, :update_password]
 
   #Actions
   def index
@@ -82,7 +81,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @detail = @user.user_detail.present? ? @user.user_detail : UserDetail.new
+    @detail = @user.user_detail.present? ? @user.user_detail : @user.build_user_detail
   end
 
   def update
@@ -90,13 +89,12 @@ class UsersController < ApplicationController
     @detail = @user.user_detail.present? ? @user.user_detail : @user.build_user_detail
     uploaded_io = params[:user][:user_detail_attributes][:avater]
     uploaded_io.present? ? @user.size = uploaded_io.size : @user.size = 0
-  
+    debugger
     if uploaded_io.present?
       profile_pic_name = params[:user][:user_detail_attributes][:avater].original_filename
       File.open(Rails.root.join('public', 'uploads', profile_pic_name), 'wb') do |file|
       file.write(uploaded_io.read)
         @user.avater = profile_pic_name
-        @detail.user_id = @user.id
       end
     end
     if @user.update(user_params)
