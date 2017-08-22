@@ -34,6 +34,8 @@ gem "twitter-bootstrap-rails"
 gem 'will_paginate'
 gem 'font-awesome-sass'
 gem 'pry-rails'
+gem "rmagick"
+gem 'carrierwave'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

@@ -1,4 +1,4 @@
-<%= form_for @album do |f| %>
+<%= form_for @album, :html => {:multipart => true} do |f| %>
 <div class="table-container">
   <table cellpadding="2" width="20%" align="center" cellspacing="2">
     
@@ -14,7 +14,7 @@
 
     <tr>
       <td><%= f.label :pictures %></td>
-  	  <td><%= f.file_field :image_name, :multiple => true %>	</td>
+  	  <td><%= f.file_field :image_name %>	</td>
   	</tr>
 
      <tr>

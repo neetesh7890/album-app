@@ -63,7 +63,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     @user.status_email = false
-    if @user.save 
+    if @user.save
       UserMailer.welcome_email(@user).deliver_later #VK : Need to put into template. done
       redirect_to  user_path(@user) # user k show par
     else
@@ -87,15 +87,16 @@ class UsersController < ApplicationController
   def update
     @user = User.find_by(id: params[:id])    
     @detail = @user.user_detail.present? ? @user.user_detail : @user.build_user_detail
-    uploaded_io = params[:user][:user_detail_attributes][:avater]
-    uploaded_io.present? ? @user.size = uploaded_io.size : @user.size = 0
-    if uploaded_io.present?
-      profile_pic_name = params[:user][:user_detail_attributes][:avater].original_filename
-      File.open(Rails.root.join('public', 'uploads', profile_pic_name), 'wb') do |file|
-      file.write(uploaded_io.read)
-        @user.avater = profile_pic_name
-      end
-    end
+    # uploaded_io = params[:user][:user_detail_attributes][:avater]
+    # uploaded_io.present? ? @user.size = uploaded_io.size : @user.size = 0
+    # if uploaded_io.present?
+    #   profile_pic_name = params[:user][:user_detail_attributes][:avater].original_filename
+    #   File.open(Rails.root.join('public', 'uploads', profile_pic_name), 'wb') do |file|
+    #   file.write(uploaded_io.read)
+    #     @user.avater = profile_pic_name
+    #   end
+    # end
+    @user.avatar = params[:user][:avatar].original_filename
     if @user.update(user_params)
       flash[:notice] = "#{@user.firstname} Your Profile successfully updated"
       redirect_to user_dashboards_path(user_id: @user.id) #VK : Redirect from here to dashboard and show message. remove "show_update" action. done
@@ -114,7 +115,7 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:firstname, :lastname, :email, :password, :gender, :dob, user_detail_attributes: [:address, :city, :pincode, :phone] )
+      params.require(:user).permit(:firstname, :lastname, :avatar, :email, :password, :gender, :dob, user_detail_attributes: [:address, :city, :pincode, :phone] )
     end
 
     # def details_params_up

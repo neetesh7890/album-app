@@ -6,10 +6,10 @@ class User < ApplicationRecord
   validates :password, presence: true
   validates :gender, presence: true
   validates :dob, presence: true
-  validate :avater_size , if: :avater?
+  # validate :avater_size , if: :avater?
 
   #Attributes
-  attr_accessor :size
+  attr_accessor :size, :avatar
   
   #Associations
   has_one :user_detail, dependent: :destroy
@@ -26,6 +26,9 @@ class User < ApplicationRecord
   # scope :album_has_more_comments, ->{ select('albums.id').where("user_friends.status='accept'").order('comment_count DESC') }
   # scope :not_friend, ->{ where("user_friends.status <>'accept'") }
   
+  #Uploader
+  mount_uploader :avatar, AvatarUploader
+
   #Methods
   def self.search(search)
     if search.present?
@@ -35,9 +38,9 @@ class User < ApplicationRecord
     end
   end
 
-  def avater_size #VK : Need to put into common place and understand how to use it into multiple models.
-    errors.add(:base, "Image should be less than 5MB") if size > 5.megabytes
-  end 
+  # def avater_size #VK : Need to put into common place and understand how to use it into multiple models.
+  #   errors.add(:base, "Image should be less than 5MB") if size > 5.megabytes
+  # end 
 
   def self.authenticate(emailath, password)
     user = User.find_by(email: emailath)
