@@ -96,8 +96,7 @@ class UsersController < ApplicationController
     #     @user.avater = profile_pic_name
     #   end
     # end
-    debugger
-    @user.avatar = params[:user][:avatar].original_filename
+    @user.avatar = params[:user][:avatar]
     if @user.update(user_params)
       flash[:notice] = "#{@user.firstname} Your Profile successfully updated"
       redirect_to user_dashboards_path(user_id: @user.id) #VK : Redirect from here to dashboard and show message. remove "show_update" action. done
@@ -116,7 +115,7 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:firstname, :lastname, :avatar, :email, :password, :gender, :dob, user_detail_attributes: [:address, :city, :pincode, :phone] )
+      params.require(:user).permit(:firstname, :lastname, :email, :password, :gender, :dob, user_detail_attributes: [:address, :city, :pincode, :phone] )
     end
 
     # def details_params_up

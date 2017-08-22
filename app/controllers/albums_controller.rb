@@ -33,7 +33,6 @@ class AlbumsController < ApplicationController
 
 	def create
 		@album = @user.albums.new(params.require(:album).permit(:album_name))
-		debugger
 		images = params["album"]["image_name"]
 		if images.present?
 			images.each do |image|
