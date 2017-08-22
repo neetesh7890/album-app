@@ -28,21 +28,30 @@ class AlbumsController < ApplicationController
 	def new
 		@album = Album.new
 		@user = User.find_by(id: session[:user_id])
+		@album_image = @album.album_images.build
 	end
 
 	def create
 		@album = @user.albums.new(params.require(:album).permit(:album_name))
-		# img_names = params["album"]["image_name"]
 		debugger
-		album_image = @album.album_images.build 
-		album_image.image_name = params[:album][:image_name].original_filename
-		if @album.save		
-			flash[:notice] = "Album Created"
-			redirect_to user_albums_path(@user.id)	
+		images = params["album"]["image_name"]
+		if images.present?
+			images.each do |image|
+				@album_image = @album.album_images.build
+				@album_image.image_name = image
+			end			
+			if @album.save
+				flash[:notice] = "Album Created"
+				redirect_to user_albums_path(@user.id)	
+			else
+				redirect_to user_albums_path(@user.id)		
+			end
 		else
-			redirect_to user_albums_path(@user.id)		
+			flash[:notice] = "Album could not uploaded please select atleat one image"
+			redirect_to user_albums_path(@user.id)	
 		end
-		
+
+		# img_names = params["album"]["image_name"]
 		# if img_names.present?
 			# img_names.each do |img_name|
 			# 	@albumimage = @album.album_images.new

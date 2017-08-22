@@ -96,6 +96,7 @@ class UsersController < ApplicationController
     #     @user.avater = profile_pic_name
     #   end
     # end
+    debugger
     @user.avatar = params[:user][:avatar].original_filename
     if @user.update(user_params)
       flash[:notice] = "#{@user.firstname} Your Profile successfully updated"

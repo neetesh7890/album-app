@@ -1,7 +1,4 @@
-
-
 <div class="">
-<% debugger %>
 	<h1> Welcome <%= @user.firstname %></h1>
-  <%= image_tag @user.avatar_url if @user.avatar? %>
+  <%= image_tag @user.avatar_url(:resize).to_s if @user.avatar? %>
 </div>

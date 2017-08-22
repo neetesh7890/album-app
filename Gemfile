@@ -35,6 +35,7 @@ gem 'will_paginate'
 gem 'font-awesome-sass'
 gem 'pry-rails'
 gem "rmagick"
+gem 'mini_magick'
 gem 'carrierwave'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
