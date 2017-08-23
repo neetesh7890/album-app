@@ -30,23 +30,51 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # end
 
   # Create different versions of your uploaded files:
+  process resize_to_fit: [300, 300]
+  # debugger
   version :resize do
-    process resize_to_fit: [300, 300]
+    # debugger
+    process resize_to_fit: [100, 100], :if => :user?
     # process :resize_to_limit => []
   end
 
-  # process :resize_to_limit => [50, 50], :if => :icon_only?
-  
+  # version :large do
+  #   # debugger
+  #   process resize_to_fit: [200, 200], :if => :album?
+  #   # process :resize_to_limit => []
+  # end
+
+  # version :thumb do
+    
+  # end
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
-  # def extension_whitelist
-  #   %w(jpg jpeg gif png)
-  # end
+  def extension_whitelist
+    %w(jpg jpeg gif png)
+  end
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  # def filename
-  #   "something.jpg" if original_filename
+  def filename
+    # debugger
+    "original_#{model.avatar.file.extension}" if original_filename
+  end
+
+  private
+  # def image?(new_file)
+  #   debugger
+  #   self.file.content_type.include? 'image'
   # end
 
+  def user?(img)
+    # debugger
+    # image = MiniMagick::Image.open(img.file)
+    # image[:height]
+    true if model.class.name == "User"
+  end
+
+  def album?(img)
+    # debugger
+    true if model.class.name == "Album"
+  end
 end
