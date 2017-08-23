@@ -34,7 +34,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # debugger
   version :resize do
     # debugger
-    process resize_to_fit: [100, 100], :if => :user?
+    process resize_to_fit: [200, 200]
     # process :resize_to_limit => []
   end
 
@@ -55,10 +55,10 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  def filename
-    # debugger
-    "original_#{model.avatar.file.extension}" if original_filename
-  end
+  # def filename
+  #   # debugger
+  #   "original_#{model.avatar.file.extension}" if original_filename
+  # end
 
   private
   # def image?(new_file)

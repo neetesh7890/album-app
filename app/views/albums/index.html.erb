@@ -75,7 +75,7 @@
 				
 				<div class='col-md-12'> 
 					<%= link_to comments_user_album_comments_path(@user.id,album.id) do %>
-						<%= image_tag "/uploads/#{album.album_images.first.image_name}", class: 'img-thumbnail'	%>
+						<%= image_tag album.album_images.first.image_name_url, class: 'img-thumbnail'	%>
 					<% end %>
 				</div>
 				<div class="col-md-11 col-sm-offset-1">

@@ -2,11 +2,6 @@ Rails.application.routes.draw do
   get 'user_details/new'
 
 
-
-
-
-
-
   get 'users/login' #new
   delete 'users/logout', to: 'users#logout' #new
   get 'users/new_account_help', to:'users#new_account_help', as: 'new_account_help' #new
@@ -14,11 +9,11 @@ Rails.application.routes.draw do
   get '/users/reset_password/:id', to: "users#reset_password", as: 'reset_password'
   post '/users/update_password/:id', to: "users#update_password", as: 'update_password'
   
+  resources :sessions
   resources :users do
     get :verify#old
 
-    resources :albums do
-     
+    resources :albums do     
       collection do
         get '/my_album', to: "albums#my_album",as: 'my_album'
         get '/friend_album', to: "albums#friend_album",as: 'friend_album'
@@ -48,32 +43,30 @@ Rails.application.routes.draw do
 
       collection do
         # get :verify
-
         get '/:token/accept', to:'friends#accept', as: 'accept'
       end
     end
   end
+  
 
-
-  resources :sessions
   
   # resources :users do
   #   get :verify
   # end
-  resources :albums do
-    resources :comments do
-    end
-  end 
+  # resources :albums do
+  #   resources :comments do
+  #   end
+  # end 
 
   # get '/albums/friend_album/:id', to: "albums#friend_album",as: 'friend_album'
 
-  resources :friends do
-    # get :notification
-  end
+  # resources :friends do
+  #   # get :notification
+  # end
   post 'friends/search', to:'friends#search'
 
-  get 'friends/:token/accept', to:'friends#accept', as: 'friends_accept'
-  get 'dashboards/information/:id', to: 'dashboards#information'
+  # get 'friends/:token/accept', to:'friends#accept', as: 'friends_accept'
+  # get 'dashboards/information/:id', to: 'dashboards#information'
   # resources :dashboards
 
   
@@ -87,10 +80,10 @@ Rails.application.routes.draw do
 
   
 
-  resources :actions
-  get 'details_first', to: "users#details_first"
-  get 'show_update', to: "users#show_update"
-  post 'details_create', to: "users#details_create"
+  # resources :actions
+  # get 'details_first', to: "users#details_first"
+  # get 'show_update', to: "users#show_update"
+  # post 'details_create', to: "users#details_create"
   
   # get '/email_verifier/:id', to: 'users#email_verifier', as: 'email_verifier'
   

@@ -1,7 +1,7 @@
 <%= form_for @user , url: {action: "create"}, method: "post"  do |f| %>
 	<div class='row'>
 		<div class='col-md-4'>
-			<%= link_to new_album_path do%>
+			<%= link_to new_user_album_path(@user.id), title:"Create new album" do%>
 		  	<i class="fa fa-plus fa-3x" aria-hidden="true"></i>
 		  <% end %>	
 		</div>

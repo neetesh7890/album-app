@@ -11,7 +11,7 @@
   <div class="col-md-8 color-ffeecc">
     <% @albums.each do |item|%>
       <div class="col-md-3">
-        <%= image_tag "/uploads/#{item.image_name}", height: "180px", width: "180px", class: 'img-rounded' %> 
+        <%= image_tag item.image_name_url, height: "180px", width: "180px", class: 'img-rounded' %> 
       </div>
     <% end %>   
   </div>

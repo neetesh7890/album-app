@@ -14,7 +14,7 @@ class User < ApplicationRecord
   #Associations
   has_one :user_detail, dependent: :destroy
   has_many :albums, dependent: :destroy
-  has_many :user_friends, dependent: :destroy
+  has_many :user_friends, dependent: :destroy, inverse_of: :user
   has_many :friends, through: :user_friends
 
   accepts_nested_attributes_for :user_detail
