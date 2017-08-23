@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     render layout: 'simple'
   end
 
-  def create_account_help #new
+  def create_account_help
     email = params[:user][:email]
     @user = User.find_by(email: email)    
     if @user.present?
@@ -43,14 +43,14 @@ class UsersController < ApplicationController
     end
   end
 
-  def reset_password #new
+  def reset_password
     @user = User.find_by(id: params[:id])
   end
 
-  def update_password #new
+  def update_password
     @user = User.find_by(id: params[:id])
     @user.password = params["user"]["password"]
-    if @user.save   #check please
+    if @user.save
       flash[:notice] = "Password Updated"
       redirect_to root_path
     end

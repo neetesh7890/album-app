@@ -24,10 +24,8 @@ class SessionsController < ApplicationController
       remember = params[:user][:remember_me]
       cookies[:password] = @user.password if remember == "1"
       session[:user_id] = @user.id 
-      # If first time then edit else dashboards.
       @user.user_detail.blank? ? "#{redirect_to edit_user_path(id: @user.id)}" : "#{redirect_to user_dashboards_path(@user.id)}"
     else
-      # @user = User.new
       flash[:notice] = "Invalid Credentials"
       return redirect_to users_login_path
     end    
