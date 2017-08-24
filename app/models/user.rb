@@ -29,7 +29,7 @@ class User < ApplicationRecord
   #Uploader
   mount_uploader :avatar, AvatarUploader
 
-  #Public Methods
+  #Public Class Methods
   def self.search(search)
     if search.present?
       where('firstname LIKE ?', "%#{search}%")
@@ -48,6 +48,11 @@ class User < ApplicationRecord
     end
   end
 
+  #Public methods
+  def avater_size #VK : Need to put into common place and understand how to use it into multiple models.
+    errors.add(:base, "Image should be less than 5MB") if size > 5.megabytes
+  end 
+
   # def self.i_user(image_object)
   #   debugger
   #   if image_object.present?
@@ -59,10 +64,6 @@ class User < ApplicationRecord
   #   end
   # end
 
-  def avater_size #VK : Need to put into common place and understand how to use it into multiple models.
-    errors.add(:base, "Image should be less than 5MB") if size > 5.megabytes
-  end 
-  
   # after_initialize do |user|
   #   puts "You have initialized an object!"
   # end

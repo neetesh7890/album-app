@@ -104,6 +104,7 @@ class UsersController < ApplicationController
       redirect_to user_dashboards_path(user_id: @user.id) #VK : Redirect from here to dashboard and show message. remove "show_update" action. done
     else
       render 'edit'
+      # redirect_to edit_user_path
     end
   end
 
