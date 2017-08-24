@@ -6,6 +6,7 @@ class SessionsController < ApplicationController
   skip_before_action :access_check, only: [:new, :create]
   skip_before_action :current_user, only: [:new, :create]
 
+  #Actions
   def show   
   end
 

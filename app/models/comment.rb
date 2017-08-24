@@ -1,4 +1,8 @@
 class Comment < ApplicationRecord
-  belongs_to :commentable, polymorphic: true
+  
+  #Validations
   validates :comment_name, presence: true
+
+  #Association
+  belongs_to :commentable, polymorphic: true
 end

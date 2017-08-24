@@ -9,5 +9,6 @@ class Album < ApplicationRecord
   #Scopes
   scope :comments, -> { order('comment_count DESC') }
 
-  mount_uploader :image_name, AvatarUploader
+  #Uploader
+  # mount_uploader :image_name, AvatarUploader
 end

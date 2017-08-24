@@ -112,8 +112,8 @@ class AlbumsController < ApplicationController
 			flash[:notice] = "Album deleted"
 			redirect_to user_albums_path(@user.id)
 		else
-			redirect_to user_albums_path(@user.id)
 			flash[:notice] = "Album could not deleted"
+			redirect_to user_albums_path(@user.id)
 		end
 	end
 

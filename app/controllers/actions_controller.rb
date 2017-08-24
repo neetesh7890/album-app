@@ -8,6 +8,28 @@ class ActionsController < ApplicationController
 	skip_before_action :current_user, only: [:login,:new,:create,:reset_password, :update_password]
 	
 	#Actions
+	def show
+	end
+
+	def edit
+		if params[:id].present?
+			@user = User.find(params[:id])	
+		else
+			render 'new'
+		end
+	end
+
+	def update
+		@user = User.find(params[:id])
+		@user.password = params[:user][:password]
+		if @user.update(params.require(:user).permit(:password))
+			redirect_to forgot_password_path(@user)	
+		else
+			flash[:notice] = "Profile Could not updated"
+		end
+		#VK : Need to check if update then redirect, otherwise redirect back with some notice. done
+	end
+	
 	# def login
 	# 	@user = User.new
 	# end
@@ -45,28 +67,6 @@ class ActionsController < ApplicationController
 	# 		redirect_to root_path
 	# 	end
 	# end
-	
-	def show
-	end
-
-	def edit
-		if params[:id].present?
-			@user = User.find(params[:id])	
-		else
-			render 'new'
-		end
-	end
-
-	def update
-		@user = User.find(params[:id])
-		@user.password = params[:user][:password]
-		if @user.update(params.require(:user).permit(:password))
-			redirect_to forgot_password_path(@user)	
-		else
-			flash[:notice] = "Profile Could not updated"
-		end
-		#VK : Need to check if update then redirect, otherwise redirect back with some notice. done
-	end
 
 	#Private Methods
 	private

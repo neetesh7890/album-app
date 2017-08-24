@@ -113,6 +113,7 @@ class UsersController < ApplicationController
     render layout: "special_layout"
   end
 
+  #Private methods
   private
     def user_params
       params.require(:user).permit(:firstname, :lastname, :email, :password, :gender, :dob, user_detail_attributes: [:address, :city, :pincode, :phone] )
