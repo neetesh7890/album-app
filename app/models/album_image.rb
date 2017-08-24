@@ -5,5 +5,4 @@ class AlbumImage < ApplicationRecord
 
   #Uploader
   mount_uploader :image_name, AvatarUploader
-
 end

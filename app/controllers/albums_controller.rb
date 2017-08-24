@@ -77,23 +77,35 @@ class AlbumsController < ApplicationController
 	end
 	
 	def update
+		debugger
 		@album = @user.albums.find_by(id: params[:id])
 		img_names = params["album"]["image_name"] if @album.present?
-		unless img_names.nil?
-			img_names.each do |img_name|
-				@albumimage = AlbumImage.new
-				@albumimage.album_id = @album.id
-				pic_name = img_name.original_filename
-				File.open(Rails.root.join('public', 'uploads', pic_name), 'wb') do |file|
-		      file.write(img_name.read)
-				@albumimage.image_name = pic_name
-		    end
-				redirect_to album_all_user_album_path(@user.id,params[:id]) and return unless @albumimage.save	 #true par nahi chalega false par redirect to		        
-				flash[:notice] = "Album Updated"
+		if img_names.present?
+			img_names.each do |image|
+				album_image = @album.album_images.build
+				debugger
+				album_image.image_name = image		
 			end
+			if @album.save
+				redirect_to album_all_user_album_path(@user.id,params[:id])
+			end
+		else
+			flash[:notice] = "Album could not update"
+			redirect_to album_all_user_album_path(@user.id,params[:id])	
 		end
-
-		redirect_to album_all_user_album_path(@user.id,params[:id])
+		# unless img_names.nil?
+		# 	img_names.each do |img_name|
+		# 		@albumimage = AlbumImage.new
+		# 		@albumimage.album_id = @album.id
+		# 		pic_name = img_name.original_filename
+		# 		File.open(Rails.root.join('public', 'uploads', pic_name), 'wb') do |file|
+		#       file.write(img_name.read)
+		# 		@albumimage.image_name = pic_name
+		#     end
+		# 		redirect_to album_all_user_album_path(@user.id,params[:id]) and return unless @albumimage.save	 #true par nahi chalega false par redirect to		        
+		# 		flash[:notice] = "Album Updated"
+		# 	end
+		# end
 	end
 
 	def destroy	

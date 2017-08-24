@@ -16,7 +16,8 @@ class CommentsController < ApplicationController
 		@album = Album.find_by(id: params[:album_id])
 		@comment = @album.comments.build(comment_name: params[:new_comment])
 		@comment.user_id = @user.id
-		Album.find_by(id: params[:album_id]).increment!(:comment_count) #Auto increment comment_count in albums
+		debugger
+		@album.increment!(:comment_count) #Auto increment comment_count in albums
 		# if @comment.save
 		# 	redirect_to user_album_comments_path(@user.id,params[:album_id])
 		# else
@@ -90,10 +91,8 @@ class CommentsController < ApplicationController
 	end
 
 	def comment_destroy #new
-		user_ids = @user.friends.confirm_friend.pluck(:id)
-		@friends_albums = Album.where(user_id: user_ids).comments
+		@friends_albums = Album.where(user_id: @user.friends.confirm_friend.pluck(:id)).comments
 		comment = @friends_albums.find_by(id: params[:album_id]).comments.find(params[:id])
-		debugger
 		Album.find_by(id: params[:album_id]).decrement!(:comment_count) #Auto decrement comment_count in albums
 		if comment.destroy
 			redirect_to comments_user_album_comments_path(@user.id,params[:album_id])
