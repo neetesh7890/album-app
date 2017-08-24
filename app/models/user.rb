@@ -6,7 +6,7 @@ class User < ApplicationRecord
   validates :password, presence: true
   validates :gender, presence: true
   validates :dob, presence: true
-  validate :avater_size , if: :avater?
+  validate :avater_size , if: :avatar?
 
   #Attributes
   attr_accessor :size, :avatar

@@ -32,7 +32,9 @@
          <%= link_to "Albumapp",user_dashboards_path(@user.id), class: "navbar-brand" %>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li><a><%= image_tag "/uploads/#{@user.avater}",height: "30px",width: "40px" %></a></li>
+            <% if @user.avatar.present? %>
+            <li><a><%= image_tag @user.avatar_url, height: "30px",width: "40px" %></a></li>
+            <% end %>
             <li><a><%= @user.firstname %></a></li>
             <li><a href=""></a></li>
             <li><%= link_to "Manage Album", user_albums_path(@user.id)  %></li>

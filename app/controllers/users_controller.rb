@@ -65,7 +65,7 @@ class UsersController < ApplicationController
     @user.status_email = false
     if @user.save
       UserMailer.welcome_email(@user).deliver_later #VK : Need to put into template. done
-      redirect_to  user_path(@user) # user k show par
+      render 'welcome'
     else
       render 'new'
     end
@@ -87,6 +87,15 @@ class UsersController < ApplicationController
   def update
     @user = User.find_by(id: params[:id])    
     @detail = @user.user_detail.present? ? @user.user_detail : @user.build_user_detail
+    params[:user][:avatar].present? ? @user.size = params[:user][:avatar].size : @user.size = 0
+    @user.avatar = params[:user][:avatar]
+    if @user.update(user_params)
+      flash[:notice] = "#{@user.firstname} Your Profile successfully updated"
+      redirect_to user_dashboards_path(user_id: @user.id) #VK : Redirect from here to dashboard and show message. remove "show_update" action. done
+    else
+      render 'edit'
+      # redirect_to edit_user_path
+    end
     # uploaded_io = params[:user][:user_detail_attributes][:avater]
     # uploaded_io.present? ? @user.size = uploaded_io.size : @user.size = 0
     # if uploaded_io.present?
@@ -97,15 +106,6 @@ class UsersController < ApplicationController
     #   end
     # end
     # User.i_user(params[:user][:avatar])
-    params[:user][:avatar].present? ? @user.size = params[:user][:avatar].size : @user.size = 0
-    @user.avatar = params[:user][:avatar]
-    if @user.update(user_params)
-      flash[:notice] = "#{@user.firstname} Your Profile successfully updated"
-      redirect_to user_dashboards_path(user_id: @user.id) #VK : Redirect from here to dashboard and show message. remove "show_update" action. done
-    else
-      render 'edit'
-      # redirect_to edit_user_path
-    end
   end
 
   def friends
@@ -114,6 +114,10 @@ class UsersController < ApplicationController
 
   def show
     render layout: "special_layout"
+  end
+
+  def welcome
+    #render layout: "special_layout"
   end
 
   #Private methods

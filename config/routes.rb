@@ -1,15 +1,17 @@
 Rails.application.routes.draw do  
+  
+  get 'users/welcome'
   get 'user_details/new'
-  get 'users/login' #new
-  delete 'users/logout', to: 'users#logout' #new
-  get 'users/new_account_help', to:'users#new_account_help', as: 'new_account_help' #new
-  post 'users/create_account_help', to:'users#create_account_help', as: 'account_help' #new
+  get 'users/login'
+  delete 'users/logout', to: 'users#logout'
+  get 'users/new_account_help', to:'users#new_account_help', as: 'new_account_help'
+  post 'users/create_account_help', to:'users#create_account_help', as: 'account_help'
   get '/users/reset_password/:id', to: "users#reset_password", as: 'reset_password'
   post '/users/update_password/:id', to: "users#update_password", as: 'update_password'
   
   resources :sessions
   resources :users do
-    get :verify#old
+    get :verify
 
     resources :albums do     
       collection do

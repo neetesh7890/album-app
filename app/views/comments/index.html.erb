@@ -17,7 +17,7 @@
 
   <div class="col-md-4 color-c2d6d6">
     <div class="col-md-1">
-      <%= image_tag "/uploads/#{@friend.avater}", height: "50px", width: "50px" %>
+      <%= image_tag @friend.avatar_url, height: "50px", width: "50px" %>
     </div>
     <div class="col-md-8">
       <p><%= @friend.firstname  %></p>
