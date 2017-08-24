@@ -36,7 +36,7 @@
 				<div class='col-md-12'>
 					<%= link_to user_album_comments_path(@user.id,item.id) do %>
 						<% if item.album_images.first.present? %>
-							<%= image_tag item.album_images.first.image_name_url , class: 'img-thumbnail' %>
+							<%= image_tag item.album_images.first.image_name_url(:size_135_180) , class: 'img-thumbnail' %>
 						<% else %>
 							<%= image_tag "/uploads/", class: 'img-thumbnail' %>
 						<% end %>
@@ -77,7 +77,7 @@
 				
 				<div class='col-md-12'> 
 					<%= link_to comments_user_album_comments_path(@user.id,album.id) do %>
-						<%= image_tag album.album_images.first.image_name_url, class: 'img-thumbnail'	%>
+						<%= image_tag album.album_images.first.image_name_url(:size_135_180) , class: 'img-thumbnail'	%>
 					<% end %>
 				</div>
 				<div class="col-md-11 col-sm-offset-1">

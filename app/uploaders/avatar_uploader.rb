@@ -31,11 +31,27 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   process resize_to_fit: [300, 300]
-  # debugger
-  version :resize do
-    # debugger
-    process resize_to_fit: [200, 200]
-    # process :resize_to_limit => []
+  
+  # version :resize do
+  #   process resize_to_fit: [200, 200]
+  #   # process :resize_to_limit => []
+  # end
+
+  version :size_135_180 ,:if => :album_image? do
+    process resize_to_fit: [135, 180]
+  end
+
+
+  version :large ,:if => :large? do
+    process resize_to_fit: [300, 300]
+  end
+
+  def large?(file_name)
+    true if model.class.name == "User"
+  end
+
+  def album_image?(file_name)
+    true if model.class.name == "AlbumImage"
   end
 
   # version :large do
@@ -66,15 +82,15 @@ class AvatarUploader < CarrierWave::Uploader::Base
   #   self.file.content_type.include? 'image'
   # end
 
-  def user?(img)
-    # debugger
-    # image = MiniMagick::Image.open(img.file)
-    # image[:height]
-    true if model.class.name == "User"
-  end
+  # def user?(img)
+  #   # debugger
+  #   # image = MiniMagick::Image.open(img.file)
+  #   # image[:height]
+  #   true if model.class.name == "User"
+  # end
 
-  def album?(img)
-    # debugger
-    true if model.class.name == "Album"
-  end
+  # def album?(img)
+  #   # debugger
+  #   true if model.class.name == "Album"
+  # end
 end
