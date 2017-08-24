@@ -2,9 +2,9 @@ class AlbumsController < ApplicationController
 	
 	#Actions
 	def index
-		@albums = @user.albums.order('comment_count DESC').paginate(:page => params[:page], :per_page => 6)
+		@albums = @user.albums.order('comment_count DESC').paginate(:page => params[:page], :per_page => 5)
 		user_ids = @user.friends.confirm_friend.pluck(:id)
-		@friends_albums = Album.where(user_id: user_ids).comments.paginate(:page => params[:page], :per_page => 6)
+		@friends_albums = Album.where(user_id: user_ids).comments.paginate(:page => params[:page], :per_page => 5)
 	end
 
 	def my_album
