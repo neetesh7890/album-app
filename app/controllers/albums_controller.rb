@@ -77,13 +77,11 @@ class AlbumsController < ApplicationController
 	end
 	
 	def update
-		debugger
 		@album = @user.albums.find_by(id: params[:id])
 		img_names = params["album"]["image_name"] if @album.present?
 		if img_names.present?
 			img_names.each do |image|
 				album_image = @album.album_images.build
-				debugger
 				album_image.image_name = image		
 			end
 			if @album.save

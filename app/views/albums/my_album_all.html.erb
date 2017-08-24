@@ -22,17 +22,14 @@
   <hr>
   <div class='row'>
     <% @albums.each do |item|%>
-      <div class='col-md-4'>    
-        <div class='col-md-12'>
-        </div>
-
-        <div class='col-md-12'>
+      <div class='col-md-2'>    
+        <div class='col-md-1 col-sm-offset-9'>
           <%= link_to destroy_pic_user_album_path(@user.id,@album.id,pic_id: item.id),method: :delete, title: "Delete pic",data: { confirm: 'Are you sure?' }  do %>
             <i class="fa fa-trash fa-2x" aria-hidden="true"></i>
           <% end %>
         </div>
     
-        <div class='col-md-12 index-margin-bottom'>          
+        <div class='col-md-12'>          
           <%= image_tag item.image_name_url if item.image_name.present? %>
         </div>
       </div>
