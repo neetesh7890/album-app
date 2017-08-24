@@ -6,7 +6,7 @@ class User < ApplicationRecord
   validates :password, presence: true
   validates :gender, presence: true
   validates :dob, presence: true
-  # validate :avater_size , if: :avater?
+  validate :avater_size , if: :avater?
 
   #Attributes
   attr_accessor :size, :avatar
@@ -59,9 +59,9 @@ class User < ApplicationRecord
   #   end
   # end
 
-  # def avater_size #VK : Need to put into common place and understand how to use it into multiple models.
-  #   errors.add(:base, "Image should be less than 5MB") if size > 5.megabytes
-  # end 
+  def avater_size #VK : Need to put into common place and understand how to use it into multiple models.
+    errors.add(:base, "Image should be less than 5MB") if size > 5.megabytes
+  end 
   
   # after_initialize do |user|
   #   puts "You have initialized an object!"

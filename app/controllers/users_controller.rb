@@ -97,6 +97,7 @@ class UsersController < ApplicationController
     #   end
     # end
     # User.i_user(params[:user][:avatar])
+    params[:user][:avatar].present? ? @user.size = params[:user][:avatar].size : @user.size = 0
     @user.avatar = params[:user][:avatar]
     if @user.update(user_params)
       flash[:notice] = "#{@user.firstname} Your Profile successfully updated"
