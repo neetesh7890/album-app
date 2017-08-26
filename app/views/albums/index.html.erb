@@ -70,20 +70,20 @@
 
 <div class='row'>
 	<% @friends_albums.each do |album| %>
-			<div class='col-md-2'>
-				<div class="col-md-4">
-					<h4><%= User.find_by(id: album.user_id).firstname %></h4>
-				</div>
-				
-				<div class='col-md-12'> 
-					<%= link_to user_album_comments_path(@user.id,album.id) do %>
-						<%= image_tag album.album_images.first.image_name_url(:size_135_180) , class: 'img-thumbnail'	%>
-					<% end %>
-				</div>
-				<div class="col-md-11 col-sm-offset-1">
-					<%= link_to album.album_name %>
-				</div>
+		<div class='col-md-2'>
+			<div class="col-md-4">
+				<h4><%= User.find_by(id: album.user_id).firstname %></h4>
 			</div>
+			
+			<div class='col-md-12'> 
+				<%= link_to user_album_comments_path(@user.id,album.id) do %>
+					<%= image_tag album.album_images.first.image_name_url(:size_135_180) , class: 'img-thumbnail'	%>
+				<% end %>
+			</div>
+			<div class="col-md-11 col-sm-offset-1">
+				<%= link_to album.album_name %>
+			</div>
+		</div>
 	<% end %>	
 	<div class="col-md-2", style="margin-top: 90px; color: green;">
 		<h3><%= link_to "View All", friend_album_user_albums_path(@user.id) %></h3>

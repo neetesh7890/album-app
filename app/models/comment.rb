@@ -4,5 +4,5 @@ class Comment < ApplicationRecord
   validates :comment_name, presence: true
 
   #Association
-  belongs_to :commentable, polymorphic: true
+  belongs_to :commentable, polymorphic: true, counter_cache: :count
 end
