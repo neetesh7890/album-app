@@ -33,7 +33,7 @@
         <% user = User.find_by(id: comment.user_id) %>
           <div id="com-<%=comment.id%>">
             <div class="col-md-12">
-              <b><%= @user.firstname%></b>
+              <b><%= user.firstname%></b>
             </div>
           
             <div class="col-md-9 col-sm-offset-1">
