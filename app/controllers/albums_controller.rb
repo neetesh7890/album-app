@@ -4,22 +4,29 @@ class AlbumsController < ApplicationController
 	def index
 		@albums = @user.albums.order('comment_count DESC').paginate(:page => params[:page], :per_page => 5)
 		user_ids = @user.friends.confirm_friend.pluck(:id)
-		@friends_albums = Album.where(user_id: user_ids).comments.paginate(:page => params[:page], :per_page => 5)
+		@friends_albums = Album.where(user_id: user_ids).albums_order_by_comments.paginate(:page => params[:page], :per_page => 5)
 	end
 
 	def my_album
-		@albums = @user.albums
 	end
 
 	def friend_album
 		user_ids = @user.friends.confirm_friend.pluck(:id)
-		@friends_albums = Album.where(user_id: user_ids).comments
+		@friend_albums = Album.where(user_id: user_ids).albums_order_by_comments
 	end
 	
-	def my_album_all #new
+	def my_album_all
 		@album = @user.albums.find(params[:id])
-		@albums = @album.album_images
 		@albumimage = AlbumImage.new
+	end
+
+	def destroy_pic
+		@image = @user.albums.find_by(id: params[:id]).album_images.find_by(id: params[:pic_id])	
+		if @image.destroy
+			redirect_to album_all_user_album_path(@user.id,params[:id])
+		else
+			redirect_to album_all_user_album_path(@user.id,params[:id])
+		end
 	end
 
 	def show
@@ -27,7 +34,6 @@ class AlbumsController < ApplicationController
 
 	def new
 		@album = Album.new
-		@user = User.find_by(id: session[:user_id])
 		@album_image = @album.album_images.build
 	end
 
@@ -117,14 +123,7 @@ class AlbumsController < ApplicationController
 		end
 	end
 
-	def destroy_pic #new
-		@image = @user.albums.find_by(id: params[:id]).album_images.find_by(id: params[:pic_id])	
-		if @image.destroy
-			redirect_to album_all_user_album_path(@user.id,params[:id])
-		else
-			redirect_to album_all_user_album_path(@user.id,params[:id])
-		end
-	end
+	
 
 	#Private methods
 	private

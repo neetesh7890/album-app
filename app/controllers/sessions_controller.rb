@@ -18,8 +18,6 @@ class SessionsController < ApplicationController
   end
 
   def create
-    @user = User.find_by(email: params[:user][:email])
-    redirect_to users_login_path and return if @user.blank?
     @user = User.authenticate(params[:user][:email],params[:user][:password])  #passed email and password entered by user
     if @user.present?
       remember = params[:user][:remember_me]

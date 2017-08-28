@@ -8,7 +8,7 @@
   </div>
 
   <div class="col-md-8 color-ffeecc">
-    <% @albums.each do |item|%>
+    <% @album.album_images.each do |item|%>
       <div class="col-md-3">
         <%= image_tag item.image_name_url, height: "180px", width: "180px", class: 'img-rounded' %> 
       </div>
@@ -29,7 +29,7 @@
     </div>
 
     <div id="comments">
-      <% @comments.each do |comment| %>
+      <% @album.comments.each do |comment| %>
         <% user = User.find_by(id: comment.user_id) %>
           <div id="com-<%=comment.id%>">
             <div class="col-md-12">

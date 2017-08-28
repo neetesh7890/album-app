@@ -21,7 +21,7 @@
   <br>
   <hr>
   <div class='row'>
-    <% @albums.each do |item|%>
+    <% @album.album_images.each do |item|%>
       <div class='col-md-2'>    
         <div class='col-md-1 col-sm-offset-9'>
           <%= link_to destroy_pic_user_album_path(@user.id,@album.id,pic_id: item.id),method: :delete, title: "Delete pic",data: { confirm: 'Are you sure?' }  do %>

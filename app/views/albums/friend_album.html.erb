@@ -4,14 +4,14 @@
 	</div>
 </div>
 <div class='row'>
-	<% @friends_albums.each do |album| %>
+	<% @friend_albums.each do |album| %>
 			<div class='col-md-2'>
 				<div class="col-md-4">
 					<h4><%= User.find_by(id: album.user_id).firstname %></h4>
 				</div>
 				
 				<div class='col-md-12'> 
-					<%= link_to comments_user_album_comments_path(@user.id,album.id) do %>
+					<%= link_to user_album_comments_path(@user.id,album.id) do %>
 						<%= image_tag album.album_images.first.image_name_url, class: 'img-thumbnail'	%>
 					<% end %>
 				</div>

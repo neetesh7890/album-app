@@ -35,7 +35,7 @@
             <% if @user.avatar.present? %>
             <li><a><%= image_tag @user.avatar_url, height: "30px",width: "40px" %></a></li>
             <% end %>
-            <li><a><%= @user.firstname %></a></li>
+            <li><%= link_to @user.firstname + " " +@user.lastname, edit_user_path(@user.id)%></li>
             <li><a href=""></a></li>
             <li><%= link_to "Manage Album", user_albums_path(@user.id)  %></li>
             <li><%= link_to 'Friends', user_friends_path(user_id: @user.id) %></li>

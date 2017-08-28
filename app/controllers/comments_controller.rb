@@ -9,9 +9,7 @@ class CommentsController < ApplicationController
 	def index
 		# @album = @user.albums.find_by(id: params[:album_id])
 		@album = Album.find(params[:album_id])
-		@albums = @album.album_images
 		@comment = Comment.new
-		@comments = @album.comments
 		@friend = User.find_by(id: @album.user_id)
 	end
 
@@ -46,13 +44,13 @@ class CommentsController < ApplicationController
 	# 	end
 	# end
 
-	def album_comments #new
-		@friends_albums = Album.where(user_id: @user.friends.confirm_friend.pluck(:id)).comments
-		@album = @friends_albums.find_by(id: params[:album_id])
-		@albums = @album.album_images
-		@comment = Comment.new
-		@comments = @album.comments
-		@friend = User.find_by(id: @album.user_id)
+	def album_comments
+		# @friends_albums = Album.where(user_id: @user.friends.confirm_friend.pluck(:id)).comments
+		# @album = @friends_albums.find_by(id: params[:album_id])
+		# @albums = @album.album_images
+		# @comment = Comment.new
+		# @comments = @album.comments
+		# @friend = User.find_by(id: @album.user_id)
 	end
 
 	def new

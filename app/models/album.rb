@@ -7,7 +7,7 @@ class Album < ApplicationRecord
   # validates :image_name, presence: true
   
   #Scopes
-  scope :comments, -> { order('comment_count DESC') }
+  scope :albums_order_by_comments, -> { order('comment_count DESC') }
 
   #Uploader
   # mount_uploader :image_name, AvatarUploader

@@ -6,7 +6,7 @@ class User < ApplicationRecord
   validates :password, presence: true
   validates :gender, presence: true
   validates :dob, presence: true
-  validate :avater_size , if: :avatar?
+  validate :avatar_size , if: :avatar?
 
   #Attributes
   attr_accessor :size, :avatar
@@ -41,15 +41,15 @@ class User < ApplicationRecord
   def self.authenticate(emailath, password)
     user = User.find_by(email: emailath)
     #VK : Optimize below code and reduce below conditions. done
-    if user.status_email && user.present? && password == user.password
-      user    
+    if user.present? && password == user.password && user.status_email
+      user
     else
-      user = nil 
+      nil
     end
   end
 
   #Public methods
-  def avater_size #VK : Need to put into common place and understand how to use it into multiple models.
+  def avatar_size #VK : Need to put into common place and understand how to use it into multiple models.
     errors.add(:base, "Image should be less than 5MB") if size > 5.megabytes
   end 
 

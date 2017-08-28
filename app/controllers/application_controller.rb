@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   	def access_check 
       unless session[:user_id]
         flash[:notice] = "You must be logged in to access this section"
-        redirect_to  users_login_path
+        redirect_to users_login_path
       end
     end
     
