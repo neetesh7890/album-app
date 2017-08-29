@@ -22,14 +22,11 @@ class FriendsController < ApplicationController
 		@friend = User.find_by(id: params["friend_id"])
 		@token = SecureRandom.uuid.gsub(/\-/,'')
 		UserMailer.notification(@user, @friend, @token).deliver_later
-		@userfriend = @user.user_friends.new
-		@userfriend.friend_id = @friend.id
-		@userfriend.token = @token
-		@userfriend.status = "pending"	
+		@userfriend = @user.user_friends.build(friend_id: @friend.id,token: @token,status: "pending")
 		if @userfriend.save
-			redirect_to user_dashboards_path(@user.id)#remove redirect
-		else	
-			redirect_to user_dashboards_path(@user.id) #remove redirect
+			redirect_to user_dashboards_path(@user.id)
+		else
+			redirect_to user_dashboards_path(@user.id)
 		end
 	end
 
@@ -38,36 +35,42 @@ class FriendsController < ApplicationController
 	
 	def accept
 		@userfriend = UserFriend.find_by(token: params["token"])
-		if @userfriend.token == params["token"] && session[:user_id]==@userfriend.friend_id
-			#token only thats why remain same else i would have used association
-			mutual = UserFriend.new
-			mutual.token = @userfriend.token
-			mutual.user_id = @userfriend.friend_id
-			mutual.friend_id = @userfriend.user_id
-			mutual.status = "accept"
-		
-			if mutual.save
-				flash[:notice] = "Friend Added"
-			else
-				flash[:notice] = "Could not added"
-			end
-		end
-
 		if @userfriend.status == "accept"
-				flash[:notice] = "Already added"
-				redirect_to user_dashboards_path(user_id: @user.id)
+			flash[:notice] = "Already added"
+		elsif @userfriend.token == params["token"] && @user.id == @userfriend.friend_id
+			mutual =  @user.user_friends.build(token: @userfriend.token,friend_id: @userfriend.user_id, status: "accept")
+			@userfriend.status = "accept"
+			flash[:notice] = mutual.save && @userfriend.save ? "Friend Added" : "Could not added"
 		else
-			if @userfriend.token == params["token"] && session[:user_id]==@userfriend.friend_id
-				@userfriend.status = "accept"
-				if  @userfriend.save
-					flash[:notice] = "Friend added"	
-					redirect_to user_dashboards_path(user_id: @user.id)
-				end
-			else
-				flash[:notice] = "Invalid Link"
-				redirect_to user_dashboards_path(user_id: @user.id)
-			end
+			flash[:notice] = "Invalid Link"
+			redirect_to user_dashboards_path(@user.id) and return
 		end
+		redirect_to user_dashboards_path(@user.id)
+		# if @userfriend.token == params["token"] && session[:user_id]==@userfriend.friend_id
+		# 	debugger
+		# 	mutual =  @user.user_friends.build(token: @userfriend.token,friend_id: @userfriend.user_id, status: "accept")
+		# 	if mutual.save
+		# 		flash[:notice] = "Friend Added"
+		# 	else
+		# 		flash[:notice] = "Could not added"
+		# 	end
+		# end
+
+		# if @userfriend.status == "accept"
+		# 		flash[:notice] = "Already added"
+		# 		redirect_to user_dashboards_path(user_id: @user.id)
+		# else
+		# 	if @userfriend.token == params["token"] && session[:user_id]==@userfriend.friend_id
+		# 		@userfriend.status = "accept"
+		# 		if  @userfriend.save
+		# 			flash[:notice] = "Friend added"	
+		# 			redirect_to user_dashboards_path(user_id: @user.id)
+		# 		end
+		# 	else
+		# 		flash[:notice] = "Invalid Link"
+		# 		redirect_to user_dashboards_path(user_id: @user.id)
+		# 	end
+		# end
 	end
 
 	def destroy
