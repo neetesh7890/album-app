@@ -16,17 +16,17 @@ class UsersController < ApplicationController
 
   end
 
-  def login #new
+  def login
     @user = User.new
     render layout: 'simple'
   end
 
-  def logout #new
+  def logout
     session[:user_id] = nil
     redirect_to users_login_path, :notice => "Logged out!"
   end
 
-  def new_account_help #new
+  def new_account_help
     @user = User.new
     render layout: 'simple'
   end
@@ -85,7 +85,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find_by(id: params[:id])    
     @detail = @user.user_detail.present? ? @user.user_detail : @user.build_user_detail
     params[:user][:avatar].present? ? @user.size = params[:user][:avatar].size : @user.size = 0
     @user.avatar = params[:user][:avatar]

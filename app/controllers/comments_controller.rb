@@ -3,12 +3,12 @@ class CommentsController < ApplicationController
 	#Filters skip
 	skip_before_action :verify_authenticity_token, :only => [:remark]
 
-	before_action :get_album, only: [:remark, :comments_remark]	
+	#Filters
+	before_action :get_album, only: [:remark, :comments_remark,:index]	
 
 	#Actions
 	def index
 		# @album = @user.albums.find_by(id: params[:album_id])
-		@album = Album.find(params[:album_id])
 		@comment = Comment.new
 		@friend = User.find_by(id: @album.user_id)
 	end
@@ -27,6 +27,24 @@ class CommentsController < ApplicationController
 		respond_to do |format|
 			format.js
 		end
+	end
+
+	def destroy	
+		# @comment = @user.albums.find_by(id: params[:album_id]).comments.find(params[:id])
+		@comment = Comment.find(params[:id])
+		Album.find_by(id: params[:album_id]).decrement!(:comment_count) #Auto decrement comment_count in albums
+		@comment = @comment.destroy
+		respond_to do |format|
+			format.js
+		end
+		# if comment.destroy
+			# render 'index'
+			# redirect_to user_album_comments_path(@user.id,params[:album_id])
+		# else
+			# render 'index'
+			# flash[:notice] = "Something went wrong could not delete comment"
+			# redirect_to user_album_comments_path(@user.id,params[:album_id])
+		# end
 	end
 
 	# def comments_remark
@@ -72,24 +90,6 @@ class CommentsController < ApplicationController
 	def show	
 	end
 
-	def destroy	
-		# @comment = @user.albums.find_by(id: params[:album_id]).comments.find(params[:id])
-		@comment = Comment.find(params[:id])
-		Album.find_by(id: params[:album_id]).decrement!(:comment_count) #Auto decrement comment_count in albums
-		@comment = @comment.destroy
-		respond_to do |format|
-			format.js
-		end
-		# if comment.destroy
-			# render 'index'
-			# redirect_to user_album_comments_path(@user.id,params[:album_id])
-		# else
-			# render 'index'
-			# flash[:notice] = "Something went wrong could not delete comment"
-			# redirect_to user_album_comments_path(@user.id,params[:album_id])
-		# end
-	end
-
 	# def comment_destroy #new
 	# 	@friends_albums = Album.where(user_id: @user.friends.confirm_friend.pluck(:id)).comments
 	# 	comment = @friends_albums.find_by(id: params[:album_id]).comments.find(params[:id])
@@ -110,8 +110,7 @@ class CommentsController < ApplicationController
 
 
 	private
-
-	def get_album
-		@album = Album.find_by(id: params[:album_id])
-	end
+		def get_album
+			@album = Album.find_by(id: params[:album_id])
+		end
 end

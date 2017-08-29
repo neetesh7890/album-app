@@ -3,19 +3,21 @@ class FriendsController < ApplicationController
 	#Filters skip
 	skip_before_action :access_check, only: [:notification,:accept,:show,:search,:destroy]
 
+	before_action :get_friends, only: [:index,:show,:search]
+
 	#Actions
 	def index
-		@friends = @user.friends.confirm_friend
+		# @friends = @user.friends.confirm_friend
 	end
 
 	def show
-		@friends = @user.friends.confirm_friend
+		# @friends = @user.friends.confirm_friend
 	end
 
 	def search
-		@ids = @user.friends.confirm_friend.ids
-		@ids = @ids.push(@user.id)
-		@results = User.search(params[:q]).all_friends(@ids)
+		ids = @friends.ids
+		ids = ids.push(@user.id)
+		@results = User.search(params[:q]).all_friends(ids)
 	end
 
 	def notification
@@ -87,4 +89,8 @@ class FriendsController < ApplicationController
 	def update
 	end
 
+	private
+		def get_friends
+			@friends = @user.friends.confirm_friend
+		end
 end
