@@ -36,7 +36,6 @@
             <li><a><%= image_tag @user.avatar_url, height: "30px",width: "40px" %></a></li>
             <% end %>
             <li><%= link_to @user.firstname + " " +@user.lastname, edit_user_path(@user.id)%></li>
-            <li><a href=""></a></li>
             <li><%= link_to "Manage Album", user_albums_path(@user.id)  %></li>
             <li><%= link_to 'Friends', user_friends_path(user_id: @user.id) %></li>
             <li><%= link_to 'Edit Info', edit_user_path(@user.id) %></li>
@@ -51,10 +50,8 @@
         <div class="col-lg-12">
           <%= bootstrap_flash %>
           <%= yield %>
-        </div>
-        
-      </div><!--/row-->
-
+        </div> 
+      </div>
     </div> <!-- /container -->
     <footer>
         <p>&copy; Company 2017</p>

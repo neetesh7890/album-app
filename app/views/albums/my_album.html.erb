@@ -15,6 +15,11 @@
 		<% @user.albums.each do |item|%>
 			<% image = item.album_images.first %>
 			<div class='col-md-2'>
+			<%debugger%>
+				<%= link_to 'Edit Ad', [:edit, @user, item] %>
+				
+				
+			<%debugger%>
 				<% image = item.album_images.first %>	
 					<div class='col-md-1 col-sm-offset-7'>
 						<%= link_to  album_all_user_album_path(@user.id,item.id),title:"Add More pic" do%>

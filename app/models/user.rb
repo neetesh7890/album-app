@@ -49,9 +49,9 @@ class User < ApplicationRecord
   end
 
   #Public methods
-  def avatar_size #VK : Need to put into common place and understand how to use it into multiple models.
-    errors.add(:base, "Image should be less than 5MB") if size > 5.megabytes
-  end 
+  # def avatar_size #VK : Need to put into common place and understand how to use it into multiple models.
+  #   errors.add(:base, "Image should be less than 5MB") if size > 5.megabytes
+  # end 
 
   # def self.i_user(image_object)
   #   debugger
